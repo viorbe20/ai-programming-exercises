@@ -7,6 +7,9 @@ sumar, restar, multiplicar, dividir y terminar.
 Author: Virginia Ordoño Bernier
 Date: november 2023
 """
+
+import time
+
 num1 = num2 = ""
 
 def add (a, b):
@@ -26,8 +29,7 @@ def divide (a, b):
     return result
 
 def show_menu():
-    print("\nElige la operación que deseas realizar. Introduce el número correspondiente.")
-    print ("Operaciones")
+    print ("\nOperaciones")
     print("-----------")
     print ("1. Suma")
     print ("2. Resta")
@@ -49,7 +51,9 @@ while True:
             num2 = float(input("\nIntroduce el segundo número: "))
         
         except ValueError:
+            print("\033c", end="")
             print("\nDebes introducir un número. Inténtalo de nuevo")
+            time.sleep(2)
 
     show_menu()
     
@@ -66,13 +70,22 @@ while True:
     # Selected option is correct
     match selected_option:
         case 1:
+            print("\033c", end="")
             print(f"\nSuma: {num1} + {num2} = {add(num1,num2)}")
+            time.sleep(2)
         case 2:
+            print("\033c", end="")
             print(f"\nResta: {num1} - {num2} = {substract(num1,num2)}")
+            time.sleep(2)
         case 3:
+            print("\033c", end="")
             print(f"\nMultiplicación: {num1} * {num2} = {multiply(num1,num2)}")
+            time.sleep(2)
         case 4:
+            print("\033c", end="")
             print(f"\nDivisión: {num1} / {num2} = {divide(num1,num2)}")
+            time.sleep(2)
         case 5:
+            print("\033c", end="")
             print("\nEl programa ha finalizado.")
             exit(0)
