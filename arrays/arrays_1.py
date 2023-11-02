@@ -7,4 +7,28 @@ A continuación, muestra el contenido de las tres listas dispuesto en tres colum
 Author: Virginia Ordoño Bernier
 Date: november 2023
 """
+import random
 
+number = [random.randint(0, 100) for _ in range(20)]
+square = [n**2 for n in number]
+cube = [n**3 for n in number]
+
+# Array 2 dimensions. One array contains the 3 arrays of numbers
+data = [number, square, cube]
+
+# One array containing arrays with each row. zip(*) unpacks a list of arrays into a list of tuples.
+data = list(map(list, zip(*data))) 
+
+print("\n")
+column_names = ['Number', 'Square', 'Cube']
+
+# Print names
+for column_name in column_names:
+    print(column_name, end='\t')
+print("\n")
+
+# Print data
+for row in data:
+    for value in row:
+        print(value, end='\t')
+    print("\n")
