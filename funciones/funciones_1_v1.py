@@ -7,11 +7,64 @@ sumar, restar, multiplicar, dividir y terminar.
 Author: Virginia Ordoño Bernier
 Date: november 2023
 """
-
 import time
 
-num1 = num2 = ""
+def main():
 
+    print("\nEl siguiente programa te pedirá dos valores y hará diferentes operaciones con ellos.")
+
+    num1 = num2 = None
+    
+    while True:
+
+        if (num1 == None) or (num2 == None):
+
+            try:
+                num1 = float(input("\nIntroduce el primer número: "))
+                num2 = float(input("\nIntroduce el segundo número: "))
+
+                show_menu(num1, num2)
+
+            except ValueError:
+                print("\033c", end="")
+                print("\nDebes introducir un número. Inténtalo de nuevo")
+                time.sleep(1)
+        else: 
+            show_menu(num1, num2)
+
+def show_menu(num1, num2):
+    
+    print("\nElige una de las siguientes opciones:")
+    print("\n1. Sumar")
+    print("\n2. Restar")
+    print("\n3. Multiplicar")
+    print("\n4. Dividir")
+    print("\n5. Terminar")
+    
+    selected_option = int(input("\nIntroduce la opción: "))
+    
+    if selected_option == 1:
+        print(f"\nSuma: {num1} + {num2} = {add(num1,num2)}")
+        time.sleep(2)
+    elif selected_option == 2:
+        print(f"\nResta: {num1} - {num2} = {substract(num1,num2)}")
+        time.sleep(2)
+    elif selected_option == 3:
+        print(f"\nMultiplicación: {num1} * {num2} = {multiply(num1,num2)}")
+        time.sleep(2)
+    elif selected_option == 4:
+        print(f"\nDivisión: {num1} / {num2} = {divide(num1,num2)}")
+        time.sleep(2)
+    elif selected_option == 5:
+        print("\033c", end="")
+        print("\nEl programa ha finalizado.")
+        exit(0)
+    else:
+        print("\033c", end="")
+        print("\nOpción incorrecta. Inténtalo de nuevo.")
+        time.sleep(1)
+        
+    
 def add (a, b):
     result = a + b
     return result
@@ -28,64 +81,5 @@ def divide (a, b):
     result = a / b
     return result
 
-def show_menu():
-    print ("\nOperaciones")
-    print("-----------")
-    print ("1. Suma")
-    print ("2. Resta")
-    print ("3. Multiplicación")
-    print ("4. División")
-    print("5. Salir")
-
-# Programm
-
-print("\nEl siguiente programa te pedirá dos valores y hará diferentes operaciones con ellos.")
-
-
-while True:
-        
-    if num1 == num2 == "":
-    
-        try:
-            num1 = float(input("\nIntroduce el primer número: "))
-            num2 = float(input("\nIntroduce el segundo número: "))
-        
-        except ValueError:
-            print("\033c", end="")
-            print("\nDebes introducir un número. Inténtalo de nuevo")
-            time.sleep(2)
-
-    show_menu()
-    
-    selected_option = ""
-    
-    # Check user´s selected option
-    while selected_option not in [1,2,3,4,5]:
-        
-        try:
-            selected_option = int(input("\nIntroduce un número del 1 al 4 para seleccionar la operación o 5 para salir: "))
-        except ValueError:
-            print("\nDebes introducir un número entre 1 y 5. Inténtalo de nuevo")
-
-    # Selected option is correct
-    match selected_option:
-        case 1:
-            print("\033c", end="")
-            print(f"\nSuma: {num1} + {num2} = {add(num1,num2)}")
-            time.sleep(2)
-        case 2:
-            print("\033c", end="")
-            print(f"\nResta: {num1} - {num2} = {substract(num1,num2)}")
-            time.sleep(2)
-        case 3:
-            print("\033c", end="")
-            print(f"\nMultiplicación: {num1} * {num2} = {multiply(num1,num2)}")
-            time.sleep(2)
-        case 4:
-            print("\033c", end="")
-            print(f"\nDivisión: {num1} / {num2} = {divide(num1,num2)}")
-            time.sleep(2)
-        case 5:
-            print("\033c", end="")
-            print("\nEl programa ha finalizado.")
-            exit(0)
+if __name__ == "__main__":
+    main()
