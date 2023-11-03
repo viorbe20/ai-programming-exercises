@@ -53,8 +53,11 @@ def show_menu(num1, num2):
         print(f"\nMultiplicación: {num1} * {num2} = {multiply(num1,num2)}")
         time.sleep(2)
     elif selected_option == 4:
-        print(f"\nDivisión: {num1} / {num2} = {divide(num1,num2)}")
-        time.sleep(2)
+        if num2 != 0:
+            print(f"\nDivisión: {num1} / {num2} = {divide(num1,num2)}")
+            time.sleep(2)
+        else:
+            print("\nEl divisor no puede ser 0")
     elif selected_option == 5:
         print("\033c", end="")
         print("\nEl programa ha finalizado.")
@@ -80,6 +83,7 @@ def multiply (a, b):
 def divide (a, b):
     result = a / b
     return result
+
 
 if __name__ == "__main__":
     main()
