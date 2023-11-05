@@ -26,7 +26,7 @@ def main():
     while True:
         selected_option = None
 
-        show_menu(num1, num2)
+        show_menu()
 
         while selected_option not in [1,2,3,4,5,6]:
             try:
@@ -41,7 +41,7 @@ def main():
             try:
                 num1 = float(input("\nIntroduce el primer número: "))
                 num2 = float(input("\nIntroduce el segundo número: "))
-                show_menu(num1, num2)
+                show_menu()
             except ValueError:
                 print("\033c", end="")
                 print("\nDebes introducir un número. Inténtalo de nuevo")
@@ -55,7 +55,7 @@ def main():
             print("\nOpción incorrecta. Inténtalo de nuevo.")
             time.sleep(1)
 
-def show_menu(num1, num2):
+def show_menu():
     print("\nOpciones:")
     print("--------------")
     print("\n1. Introducir números")
