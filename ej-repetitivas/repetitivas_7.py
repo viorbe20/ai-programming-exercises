@@ -16,7 +16,23 @@ while  amount_prime_numbers == "":
 print("\nA continuación, te mostrará los", amount_prime_numbers, "primeros números primos:\n")
 
 
-if (amount_prime_numbers <= 0):
-    print("No se puede mostrar ningún número primo.")
+if amount_prime_numbers <= 0:
+    print("No se pueden mostrar números primos.")
 else:
-    pass
+    prime_numbers = []
+    number = 2
+
+    while len(prime_numbers) < amount_prime_numbers:
+        is_prime = True
+        for divisor in range(2, int(number ** 0.5) + 1):
+            if number % divisor == 0:
+                is_prime = False
+                break
+        if is_prime:
+            prime_numbers.append(number)
+        number += 1
+
+    for prime in prime_numbers:
+        print(prime, end=", ")
+
+    print("\n")
