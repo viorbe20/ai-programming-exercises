@@ -17,3 +17,5 @@ for i in range(len(user_string) // 2):
         break
 else:
     print("\nLa cadena es un palíndromo.")
+
+# V2. cadena[::-1]es la cadena al reves

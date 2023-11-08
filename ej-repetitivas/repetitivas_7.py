@@ -3,7 +3,7 @@ Mostrar en pantalla los N primeroS número primos. Se pide por teclado la cantid
 Date: october 2023.
 Author: Virginia Ordoño Bernier
 """
-print("\nA continuación, el programa te mostrará la cantidad de númeors primos que le indiques.")
+print("\nA continuación, el programa te mostrará la cantidad de números primos que le indiques.")
 
 amount_prime_numbers = ""
 
@@ -15,10 +15,8 @@ while  amount_prime_numbers == "":
 
 print("\nA continuación, te mostrará los", amount_prime_numbers, "primeros números primos:\n")
 
-# Iterates and prints the prime numbers
-for i in range (amount_prime_numbers):
-    for j in range (2, i):
-        if i % j == 0:
-            break
-    else:
-        print(i, end = ", ")
+
+if (amount_prime_numbers <= 0):
+    print("No se puede mostrar ningún número primo.")
+else:
+    pass
