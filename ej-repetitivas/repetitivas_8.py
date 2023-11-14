@@ -13,11 +13,10 @@ substring = input("Introduce la subcadena: ")
 for i in range(len(string) - len(substring) + 1): # (len(string) - len(substring) + 1) == last index where it is possible to find substring
     
     match = True
-    print('i->' , i)
+    
     for j in range(len(substring)): # iterates through the substring 
         
         if string[i + j] != substring[j]:  # compares the characters of the substring with the characters of the string
-            print('ij->' , i+j)
             match = False
             break
     

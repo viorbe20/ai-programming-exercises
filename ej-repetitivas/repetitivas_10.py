@@ -20,7 +20,6 @@ monthly_interest_rate = annual_interest_rate / 12 / 100
 # Years to month loan term
 loan_term_months = loan_term_years * 12
 
-
 monthly_payment = (loan_amount * monthly_interest_rate) / (1 - (1 + monthly_interest_rate) ** -loan_term_months)
 
 print(f"\nPago mensual: {monthly_payment:.2f}")
