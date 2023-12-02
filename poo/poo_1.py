@@ -103,8 +103,11 @@ if __name__ == "__main__":
     t10 = Duration(10,0,0)
 
     print("\nTest 4. Restar")
-    print(f"Duration(10,19,70) - Duration(10,20,10) => {t9 - t10}")
-    print(f"Duration(10,19,70) - Duration(10,20,10) => {t10 - t9}")
+    print(f"Duration(100,40,40) - Duration(10,0,0) => {t9 - t10}")
+    print(f"Duration(10,0,0) - Duration(100,40,40) => {t10 - t9}")
     
+    # Test 5. Add and substract seconds to a duration
 
-
+    print("\nTest 5. Sumar y restar segundos")
+    print(f"Duration(10,0,0) + 10 => {t10 + Duration(seconds=10)}")
+    print(f"Duration(10,0,0) - 10 => {t10 - Duration(seconds=10)}")
