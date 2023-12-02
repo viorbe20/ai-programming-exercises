@@ -54,10 +54,18 @@ class Duration:
         def __add__(self, other):
             total_seconds = (self.hours + other.hours) * 3600 + (self.minutes + other.minutes) * 60 + self.seconds + other.seconds
             return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
+        
+        def __sub__(self, other):
+            total_seconds = (self.hours - other.hours) * 3600 + (self.minutes - other.minutes) * 60 + self.seconds - other.seconds
+            return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
+        
+        def __rsub__(self, other):
+            total_seconds = (other.hours - self.hours) * 3600 + (other.minutes - self.minutes) * 60 + other.seconds - self.seconds
+            return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
 if __name__ == "__main__":
     
-    # Test 1
+    # Test 1. Transformation
 
     t1 = Duration()
     t2 = Duration(10,62,15)
@@ -73,7 +81,7 @@ if __name__ == "__main__":
     print(f"Duration(34, 15) = {t4}")
     print(f"Duration(34, 61) = {t5}")
 
-    # Test 2
+    # Test 2. Comparison
     
     t6 = Duration(10,20,10)
     t7 = Duration(10,20,11)
@@ -83,3 +91,20 @@ if __name__ == "__main__":
     print(f"Duration(10,20,10) == Duration(10,20,10) => {t6 == t6}")
     print(f"Duration(10,20,10) == Duration(10,20,11) => {t6 == t7}")
     print(f"Duration(10,20,10) == Duration(10,19,70) => {t6 == t8}")
+
+    # Test 3. Addition
+    
+    print("\nTest 3. Sumar")
+    print(f"Duration(10,19,70) + Duration(10,20,10) => {t8 + t6}")
+
+    # Test 4. Subtraction
+
+    t9 = Duration(100,40,40)
+    t10 = Duration(10,0,0)
+
+    print("\nTest 4. Restar")
+    print(f"Duration(10,19,70) - Duration(10,20,10) => {t9 - t10}")
+    print(f"Duration(10,19,70) - Duration(10,20,10) => {t10 - t9}")
+    
+
+
