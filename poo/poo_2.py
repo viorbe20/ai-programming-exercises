@@ -59,9 +59,7 @@ class Fraction:
 
 
     def __add__(self, other):
-        if isinstance(other, int):
-            return Fraction(self.__num + other, self.__den).simplify_fraction()
-        elif isinstance(other, Fraction):
+        if isinstance(other, Fraction):
             # Same denominator
             if self.__den == other.__den:
                 return Fraction(self.__num + other.__num, self.__den).simplify_fraction()
@@ -73,6 +71,34 @@ class Fraction:
                 return Fraction(num1 + num2, lcm).simplify_fraction()
         else:
             raise ValueError('Dato inválido para la suma.')
+    
+    def __sub__(self, other):
+        if isinstance(other, Fraction):
+            # Same denominator
+            if self.__den == other.__den:
+                return Fraction(self.__num - other.__num, self.__den).simplify_fraction()
+            else:
+                # Different denominators
+                lcm = Fraction.get_lcm(self.__den, other.__den)
+                num1 = self.__num * (lcm // self.__den)
+                num2 = other.__num * (lcm // other.__den)
+                return Fraction(num1 - num2, lcm).simplify_fraction()
+        else:
+            raise ValueError('Dato inválido para la resta.')
+    
+    def __rsub__(self, other):
+        if isinstance(other, Fraction):
+            # Same denominator
+            if self.__den == other.__den:
+                return Fraction(other.__num - self.__num, self.__den).simplify_fraction()
+            else:
+                # Different denominators
+                lcm = Fraction.get_lcm(self.__den, other.__den)
+                num1 = self.__num * (lcm // self.__den)
+                num2 = other.__num * (lcm // other.__den)
+                return Fraction(num2 - num1, lcm).simplify_fraction()
+        else:
+            raise ValueError('Dato inválido para la resta.')
 
     def simplify_fraction(self):
         gcd = Fraction.get_gcd(self.__num, self.__den)
@@ -105,6 +131,6 @@ if __name__ == "__main__":
 
     # Test 2. Operaciones
     f3 = Fraction(2, 4)
-    f4 = Fraction(2, 8)
+    f4 = Fraction(2)
 
-    print(f'{f3 + f4}')
+    print(f'{f3 - f4}')
