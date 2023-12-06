@@ -37,9 +37,9 @@ class Duration:
         minutes %= 60
 
         # Inmutable = no setters
-        self.hours = hours
-        self.minutes = minutes
-        self.seconds = seconds
+        self.__hours = hours
+        self.__minutes = minutes
+        self.__seconds = seconds
 
     @staticmethod
     def _validate_type(value, name):
@@ -47,24 +47,24 @@ class Duration:
             raise TypeError(f"{name} debe ser un número entero")
 
     def __str__(self):
-        return f"{self.hours}h:{self.minutes}m:{self.seconds}s"
+        return f"{self.__hours}h:{self.__minutes}m:{self.__seconds}s"
 
     def __eq__(self, other):
-        return (self.hours, self.minutes, self.seconds) == (other.hours, other.minutes, other.seconds)
+        return (self.__hours, self.__minutes, self.__seconds) == (other.hours, other.minutes, other.seconds)
 
     def __add__(self, other):
-        total_seconds = (self.hours + other.hours) * 3600 + \
-            (self.minutes + other.minutes) * 60 + self.seconds + other.seconds
+        total_seconds = (self.__hours + other.hours) * 3600 + \
+            (self.__minutes + other.minutes) * 60 + self.__seconds + other.seconds
         return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
     def __sub__(self, other):
-        total_seconds = (self.hours - other.hours) * 3600 + \
-            (self.minutes - other.minutes) * 60 + self.seconds - other.seconds
+        total_seconds = (self.__hours - other.hours) * 3600 + \
+            (self.__minutes - other.minutes) * 60 + self.__seconds - other.seconds
         return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
     def __rsub__(self, other):
-        total_seconds = (other.hours - self.hours) * 3600 + \
-            (other.minutes - self.minutes) * 60 + other.seconds - self.seconds
+        total_seconds = (other.hours - self.__hours) * 3600 + \
+            (other.minutes - self.__minutes) * 60 + other.seconds - self.__seconds
         return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
 
