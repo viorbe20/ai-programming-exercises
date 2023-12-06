@@ -41,7 +41,7 @@ def get_operations(selected_option, num1, num2):
             print(f"\nMultiplicación: {num1} * {num2} = {multiply(num1, num2)}")
         case 4:
             if num2 == 0:
-                print("EL denominador no puede ser 0")
+                print("El denominador no puede ser 0")
             else:
                 print(f"\División: {num1} / {num2} = {divide(num1, num2)}")
 
