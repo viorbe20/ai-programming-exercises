@@ -11,14 +11,14 @@ try:
     n1 = float(input("\nIntroduce el primer número: "))
 except ValueError:
     print("\nEl valor introducido no es un número válido.")
-    exit()
+    exit(1)
 
 # Ask and check number 2
 try:
     n2 = float(input("\nIntroduce el segundo número: "))
 except ValueError:
     print("\nEl valor introducido no es un número válido.")
-    exit()
+    exit(1)
 
 # Result
 if n1 == n2:
