@@ -29,12 +29,12 @@ class HumanPlayer(Player):
         
         # while not valid square, choose an empty spot on the board
         while not valid_square:
-            square = input(f'Turno de {self.letter}. Introduce una posición de 0 a 9: ')
+            square = input(f'Turno de {self.letter}. Introduce una posición de 0 a 8: ')
             try:
                 val = int(square)
                 if val not in game.available_moves():
                     raise ValueError
                 valid_square = True
             except ValueError:
-                print('Posición incorrecta. Inténtalo de nuevo.')
+                print('Posición incorrecta. Inténtalo de nuevo.\n')
         return val
