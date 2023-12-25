@@ -20,3 +20,15 @@ class TicTacToe:
     
     def available_moves(self):
         return [i for i, spot in enumerate(self.board) if spot == '']
+    
+    def empty_squares(self):
+        # check if there are empty squares on the board and returns True if so
+        return '' in self.board
+    
+    def num_empty_squares(self):
+        # returns the exact number of empty squares on the board
+        return self.board.count('')
+
+def play(game, x_player, o_player, print_game=True):
+    if print_game:
+        game.print_board()
