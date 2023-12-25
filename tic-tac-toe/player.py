@@ -37,3 +37,4 @@ class HumanPlayer(Player):
                 valid_square = True
             except ValueError:
                 print('Posición incorrecta. Inténtalo de nuevo.')
+        return val
