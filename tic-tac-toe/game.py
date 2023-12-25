@@ -33,6 +33,9 @@ class TicTacToe:
         # if valid move, assign square to letter and return True. If not, return False
         if self.board[square] == '':
             self.board[square] = letter
+            # check if someone won
+            if self.winner(square, letter):
+                self.current_winer = letter
             return True
         return False
         
