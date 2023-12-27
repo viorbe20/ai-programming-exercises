@@ -13,7 +13,7 @@ class RandomComputerPlayer(Player):
         super().__init__(letter)
         
     def get_move(self, game):
-        # choose an empty random spot on the board
+        # return a random selected square from the available moves
         square = random.choice(game.available_moves())
         return square
 
