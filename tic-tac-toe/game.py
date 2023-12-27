@@ -39,7 +39,7 @@ class TicTacToe:
             
             # check if someone won
             if self.winner(square, letter):
-                self.current_winer = letter
+                self.current_winner = letter
             return True
         return False
     
