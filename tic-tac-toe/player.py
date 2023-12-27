@@ -2,7 +2,7 @@ import random
 
 class Player:
     def __init__(self, letter):
-        # letter can be both x and o
+        # letter can be both 'X' or 'O'
         self.letter = letter
         
     def get_move(self, game):

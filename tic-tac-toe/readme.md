@@ -1,5 +1,12 @@
 # Tic-Tac-Toe
 
+Este proyecto es una recreación del juego Tic Tac Toe basado en un tutorial de YouTube. 
+
+## Créditos
+  - Canal: [freeCodeCamp.org](enlace_al_video)
+  - Creadora: Kylie Ying
+  - Enlace al video: [12 Beginner Python Projects - Coding Course](https://www.youtube.com/watch?v=8ext9G7xspg&t=14s)
+
 ## Índice
 [1. Introducción el juego](#1-introducción-al-juego)
 [2. Clase *Player*](#2-clase-player)
