@@ -70,7 +70,7 @@ class Duration:
                 (self.__minutes + other.__minutes) * 60 + \
                 self.__seconds + other.__seconds
         else:
-            raise TypeError("Unsupported operand type")
+            raise TypeError("Valor no válido")
 
         return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
@@ -86,7 +86,7 @@ class Duration:
                 (self.__minutes - other.__minutes) * 60 + \
                 self.__seconds - other.__seconds
         else:
-            raise TypeError("Unsupported operand type")
+            raise TypeError("Valor no válido")
 
         return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
@@ -99,7 +99,7 @@ class Duration:
                 self.__hours * 3600 + self.__minutes * 60 + self.__seconds)
             return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
         else:
-            raise TypeError("Unsupported operand type")
+            raise TypeError("Valor no válido")
 
 
 if __name__ == "__main__":
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     t5 = Duration(34, 61)
 
     print("\nTest 1. Duraciones")
-    print('-'*20)
+    print('-'*40)
     print(f"Duration(10, 62, 15) = {t2}")
     print(f"Duration() = {t1}")
     print(f"Duration(34) = {t3}")
@@ -124,10 +124,9 @@ if __name__ == "__main__":
 
     t6 = Duration(10, 20, 60)
     t7 = Duration(10, 20, 10)
-    SECONDS_ = 10
 
     print('\nTest 2: Comparaciones')
-    print('-'*20)
+    print('-'*40)
     print(f"Duration(10, 20, 60) == Duration(10, 20, 10) => {t6.compare(t7)}")
     print(f"Duration(10, 20, 10) == Duration(10, 20, 60) => {t7.compare(t6)}")
     print(f"Duration(10, 20, 60) == Duration(10, 20, 60) => {t6.compare(t6)}")
@@ -139,7 +138,19 @@ if __name__ == "__main__":
     t6_rsub_10 = 10 - t6
     
     print('\nTest 3: Sumar y restar segundos')
-    print('-'*20)
+    print('-'*40)
     print(f"Duration(10, 20, 60) + 10 => {t6_plus_10}")
     print(f"Duration(10, 20, 60) - 10 => {t6_minus_10}")
     print(f"10 - Duration(10, 20, 60) => {t6_rsub_10}")
+    
+    # Test 4. Addition and substraction of durations
+    
+    t6_plus_t7 = t6 + t7
+    t6_minus_t7 = t6 - t7
+    t7_minus_t6 = t7 - t6
+    
+    print('\nTest 4: Sumar y restar duraciones')
+    print('-'*40)
+    print(f"Duration(10, 20, 60) + Duration(10, 20, 10) => {t6_plus_t7}")
+    print(f"Duration(10, 20, 10) - Duration(10, 20, 60) => {t6_minus_t7}")
+    print(f"Duration(10, 20, 60) - Duration(10, 20, 10) => {t7_minus_t6}")
