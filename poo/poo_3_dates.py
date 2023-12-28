@@ -68,6 +68,14 @@ class Date:
 
     def __ge__(self, other):
         return (self > other) or (self == other)
+    
+    def compare(self, other):
+        if self < other:
+            return f"{self} es anterior a {other}"
+        elif self > other:
+            return f"{self} es posterior a {other}"
+        else:
+            return f"{self} es igual a {other}"
 
     def day_of_week(self):
         days_since_epoch = self._calculate_days_since_epoch()
@@ -142,30 +150,18 @@ if __name__ == "__main__":
         print(f'Date(29, 2, 2022) => Error al crear la fecha: {e}')
 
     # Test 2: Comparing dates
-    date3 = Date(1, 1, 2022)
-    date4 = Date(1, 2, 2022)
-
+    date1 = Date(1, 1, 2022)
+    date2 = Date(1, 2, 2022)
 
     print('\nTest 2: Comparación de fechas')
     print('-'*40)
-    # print(f"{date3} < {date4}: {date3 < date4}")
-    # print(f"{date3} <= {date4}: {date3 <= date4}")
-    # print(f"{date4} > {date3}: {date4 > date3}")
-    # print(f"{date4} >= {date3}: {date4 >= date3}")
+    print(f"{date1} == {date2} => {date1.compare(date2)}")
+    print(f"{date2} == {date1} => {date2.compare(date1)}")
+    print(f"{date1} == {date1} => {date1.compare(date1)}")
 
-    # try:
-    #     print(f"{date4} > {date5}: {date4 > date5}")
-    # except ValueError as e:
-    #     print(f"Error al comparar fechas: {e}")
+    # Test 3: Add and substract dates
 
-    # # Test 3: Day of the week
-    # date6 = Date(28, 12, 2022)
-    # print(f"Día de la semana para {date6}: {date6.day_of_week()}")
-
-    # # Test 4: Adding and subtracting days
-    # date7 = Date(1, 1, 2023)
-    # date8 = date7.add_days(10)
-    # date9 = date7.subtract_days(5)
-
-    # print(f"{date7} + 10 days = {date8}")
-    # print(f"{date7} - 5 days = {date9}")
+    print('\nTest 3: Suma y resta de fechas')
+    print('-'*40)
+    print(f"{date1} + 31 días => {date1.add_days(31)}")
+    print(f"{date1} - 1 día => {date1.subtract_days(1)}")
