@@ -16,13 +16,10 @@ Crea una clase, y pruébala, que modele fracciones. Debe permitir:
 Author: Virginia Ordoño Bernier
 Date: november 2023
 """
-
-
 class Fraction:
 
     def __init__(self, num, den=1):
-
-        # 0 denominator validation
+        # Validación de denominador 0
         self._is_zero_den(den)
 
         self.__num = num
@@ -57,46 +54,30 @@ class Fraction:
     def __repr__(self):
         return f'Fraction({self.__num}, {self.__den})'
 
-
     def __add__(self, other):
         if isinstance(other, Fraction):
-            # Same denominator
-            if self.__den == other.__den:
-                return Fraction(self.__num + other.__num, self.__den).simplify_fraction()
-            else:
-                # Different denominators
-                lcm = Fraction.get_lcm(self.__den, other.__den)
-                num1 = self.__num * (lcm // self.__den)
-                num2 = other.__num * (lcm // other.__den)
-                return Fraction(num1 + num2, lcm).simplify_fraction()
+            lcm = Fraction.get_lcm(self.__den, other.__den)
+            num1 = self.__num * (lcm // self.__den)
+            num2 = other.__num * (lcm // other.__den)
+            return Fraction(num1 + num2, lcm).simplify_fraction()
         else:
             raise ValueError('Dato inválido para la suma.')
-    
+
     def __sub__(self, other):
         if isinstance(other, Fraction):
-            # Same denominator
-            if self.__den == other.__den:
-                return Fraction(self.__num - other.__num, self.__den).simplify_fraction()
-            else:
-                # Different denominators
-                lcm = Fraction.get_lcm(self.__den, other.__den)
-                num1 = self.__num * (lcm // self.__den)
-                num2 = other.__num * (lcm // other.__den)
-                return Fraction(num1 - num2, lcm).simplify_fraction()
+            lcm = Fraction.get_lcm(self.__den, other.__den)
+            num1 = self.__num * (lcm // self.__den)
+            num2 = other.__num * (lcm // other.__den)
+            return Fraction(num1 - num2, lcm).simplify_fraction()
         else:
             raise ValueError('Dato inválido para la resta.')
-    
+
     def __rsub__(self, other):
         if isinstance(other, Fraction):
-            # Same denominator
-            if self.__den == other.__den:
-                return Fraction(other.__num - self.__num, self.__den).simplify_fraction()
-            else:
-                # Different denominators
-                lcm = Fraction.get_lcm(self.__den, other.__den)
-                num1 = self.__num * (lcm // self.__den)
-                num2 = other.__num * (lcm // other.__den)
-                return Fraction(num2 - num1, lcm).simplify_fraction()
+            lcm = Fraction.get_lcm(self.__den, other.__den)
+            num1 = self.__num * (lcm // self.__den)
+            num2 = other.__num * (lcm // other.__den)
+            return Fraction(num2 - num1, lcm).simplify_fraction()
         else:
             raise ValueError('Dato inválido para la resta.')
 
@@ -112,7 +93,7 @@ class Fraction:
             raise ValueError("El denominador no puede ser 0.")
 
     @staticmethod
-    def get_gcd(den1, den2):  # Greatest common divisor
+    def get_gcd(den1, den2):
         den1 = abs(den1)
         den2 = abs(den2)
 
@@ -123,14 +104,28 @@ class Fraction:
         return den1
 
     @staticmethod
-    def get_lcm(den1, den2):  # Least common multiple
+    def get_lcm(den1, den2):
         return abs(den1 * den2) // Fraction.get_gcd(den1, den2)
 
 
 if __name__ == "__main__":
 
-    # Test 2. Operaciones
-    f3 = Fraction(2, 4)
-    f4 = Fraction(2)
+    # Test 1: create fractions
+    f1 = Fraction(6, 3)
+    
+    print('\nTest 1: Crear fracciones' )
+    print('-'*40)
+    print(f'Fraction(6, 3) => {Fraction(6, 3)}')
+    
 
-    print(f'{f3 - f4}')
+    # Test 2: 0 denominator
+    print('\nTest 2: Denominador 0' )
+    print('-'*40)
+    
+    try:
+        Fraction(5, 0)
+    except ValueError as e:
+        print(f'Fraction(5, 0) => Error: {e}')
+
+    # Test 3: add and substract fractions
+    
