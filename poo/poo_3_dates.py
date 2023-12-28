@@ -78,12 +78,17 @@ class Date:
             return f"{self} es igual a {other}"
 
     def day_of_week(self):
-        days_since_epoch = self._calculate_days_since_epoch()
+        days_since_start = self._get_days_amount_since_start()
         days_offset = 4  # 1/1/1970 was a Thursday (4th day of the week)
-        day_of_week = (days_since_epoch + days_offset) % Date.DAYS_IN_WEEK
-        return day_of_week
 
-    def _calculate_days_since_epoch(self):
+        # Get number day and then name day
+        day_number = (days_since_start + days_offset) % Date.DAYS_IN_WEEK
+        day_names = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+        day_name = day_names[day_number]
+
+        return day_name
+
+    def _get_days_amount_since_start(self):
         days = 0
         for year in range(1970, self.__year):
             days += 366 if Date.is_leap_year(year) else 365
@@ -161,7 +166,13 @@ if __name__ == "__main__":
 
     # Test 3: Add and substract dates
 
-    print('\nTest 3: Suma y resta de fechas')
+    print('\nTest 3: Suma y resta de días')
     print('-'*40)
     print(f"{date1} + 31 días => {date1.add_days(31)}")
     print(f"{date1} - 1 día => {date1.subtract_days(1)}")
+    
+    # Test 4: Guess day of week
+
+    print('\nTest 4: Averigua el día de la semana que es')
+    print('-'*40)
+    print(f"El {date1} es => {date1.day_of_week()}")
