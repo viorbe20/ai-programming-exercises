@@ -20,7 +20,6 @@ Author: Virginia Ordoño Bernier
 Date: november 2023
 """
 
-
 class Duration:
 
     def __init__(self, hours=0, minutes=0, seconds=0):
@@ -30,16 +29,10 @@ class Duration:
         self._validate_type(minutes, "Minutos")
         self._validate_type(seconds, "Segundos")
 
-        # Data adaptation
-        minutes += seconds // 60
-        seconds %= 60
-        hours += minutes // 60
-        minutes %= 60
-
-        # Inmutable = no setters
-        self.__hours = hours
-        self.__minutes = minutes
-        self.__seconds = seconds
+        # Private attributes (name mangling) 
+        total_seconds = hours * 3600 + minutes * 60 + seconds
+        self.__hours, accumulate = divmod(total_seconds, 3600)
+        self.__minutes, self.__seconds = divmod(accumulate, 60)
 
     @staticmethod
     def _validate_type(value, name):
@@ -47,10 +40,26 @@ class Duration:
             raise TypeError(f"{name} debe ser un número entero")
 
     def __str__(self):
-        return f"{self.__hours}h:{self.__minutes}m:{self.__seconds}s"
+        return f"{self.__hours:02d}h:{self.__minutes:02d}m:{self.__seconds:02d}s"
 
-    def __eq__(self, other):
-        return (self.__hours, self.__minutes, self.__seconds) == (other.hours, other.minutes, other.seconds)
+    def __lt__(self, other):
+        return (self.__hours, self.__minutes, self.__seconds) < (other.__hours, other.__minutes, other.__seconds)
+
+    def __le__(self, other):
+        return (self < other) or (self == other)
+
+    def __gt__(self, other):
+        return (self.__hours, self.__minutes, self.__seconds) > (other.__hours, other.__minutes, other.__seconds)
+
+    def __ge__(self, other):
+        return (self > other) or (self == other)
+    def compare(self, other):
+        if self < other:
+            return f"{self} es menor que {other}"
+        elif self > other:
+            return f"{self} es mayor que {other}"
+        else:
+            return f"{self} es igual que {other}"
 
     def __add__(self, other):
         total_seconds = (self.__hours + other.hours) * 3600 + \
@@ -79,40 +88,21 @@ if __name__ == "__main__":
     t5 = Duration(34, 61)
 
     print("\nTest 1. Duraciones")
-    print("-------------")
+    print('-'*20)
+    print(f"Duration(10, 62, 15) = {t2}")
     print(f"Duration() = {t1}")
-    print(f"Duration(10,62,15) = {t2}")
     print(f"Duration(34) = {t3}")
     print(f"Duration(34, 15) = {t4}")
     print(f"Duration(34, 61) = {t5}")
 
     # Test 2. Comparison
 
-    t6 = Duration(10, 20, 10)
-    t7 = Duration(10, 20, 11)
-    t8 = Duration(10, 19, 70)
+    t6 = Duration(10, 20, 60)
+    t7 = Duration(10, 20, 10)
 
-    print("\nTest 2. Comparar")
-    print(f"Duration(10,20,10) == Duration(10,20,10) => {t6 == t6}")
-    print(f"Duration(10,20,10) == Duration(10,20,11) => {t6 == t7}")
-    print(f"Duration(10,20,10) == Duration(10,19,70) => {t6 == t8}")
-
-    # Test 3. Addition
-
-    print("\nTest 3. Sumar")
-    print(f"Duration(10,19,70) + Duration(10,20,10) => {t8 + t6}")
-
-    # Test 4. Subtraction
-
-    t9 = Duration(100, 40, 40)
-    t10 = Duration(10, 0, 0)
-
-    print("\nTest 4. Restar")
-    print(f"Duration(100,40,40) - Duration(10,0,0) => {t9 - t10}")
-    print(f"Duration(10,0,0) - Duration(100,40,40) => {t10 - t9}")
-
-    # Test 5. Add and substract seconds to a duration
-
-    print("\nTest 5. Sumar y restar segundos")
-    print(f"Duration(10,0,0) + 10 => {t10 + Duration(seconds=10)}")
-    print(f"Duration(10,0,0) - 10 => {t10 - Duration(seconds=10)}")
+    print('\nTest 2: Comparaciones')
+    print('-'*20)
+    print(f"Duration(10, 20, 60) == Duration(10, 20, 10) => {t6.compare(t7)}")
+    print(f"Duration(10, 20, 10) == Duration(10, 20, 60) => {t7.compare(t6)}")
+    print(f"Duration(10, 20, 60) == Duration(10, 20, 60) => {t6.compare(t6)}")
+    
