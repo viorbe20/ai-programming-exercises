@@ -19,9 +19,10 @@ Date: november 2023
 class Fraction:
 
     def __init__(self, num, den=1):
-        # Validación de denominador 0
+        # Validates that the denominator is not zero
         self._is_zero_den(den)
 
+        # Initializes the numerator and denominator
         self.__num = num
         self.__den = den
 
@@ -52,9 +53,11 @@ class Fraction:
         return f'{self.__num}/{self.__den}'
 
     def __repr__(self):
+        # Formal string representation of a Fraction object
         return f'Fraction({self.__num}, {self.__den})'
 
     def __add__(self, other):
+        # Returns a new simplified Fraction object
         if isinstance(other, Fraction):
             lcm = Fraction.get_lcm(self.__den, other.__den)
             num1 = self.__num * (lcm // self.__den)
@@ -147,7 +150,6 @@ class Fraction:
 
     def __lt__(self, other):
         if isinstance(other, Fraction):
-            # Comparación utilizando el producto cruzado
             cross_product = self.__num * other.__den - other.__num * self.__den
             return cross_product < 0
         else:
