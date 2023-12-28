@@ -139,6 +139,39 @@ class Fraction:
     def get_lcm(den1, den2):
         return abs(den1 * den2) // Fraction.get_gcd(den1, den2)
 
+    def __eq__(self, other):
+         if isinstance(other, Fraction):
+             return (self.__num, self.__den) == (other.__num, other.__den)
+         else:
+             return False
+
+    def __lt__(self, other):
+        if isinstance(other, Fraction):
+            # Comparación utilizando el producto cruzado
+            cross_product = self.__num * other.__den - other.__num * self.__den
+            return cross_product < 0
+        else:
+            raise ValueError('Dato inválido para la comparación.')
+
+    def __le__(self, other):
+        return self == other or self < other
+
+    def __gt__(self, other):
+        return not (self <= other)
+
+    def __ge__(self, other):
+        return not (self < other)
+
+    def __ne__(self, other):
+        return not self == other
+    
+    def compare(self, other):
+        if self < other:
+            return f"{self} es menor que {other}"
+        elif self > other:
+            return f"{self} es mayor que {other}"
+        else:
+            return f"{self} es igual que {other}"
 
 if __name__ == "__main__":
 
@@ -167,3 +200,13 @@ if __name__ == "__main__":
     print(f'{f1} - {f2} = {f1-f2}')
     print(f'{f1} * {f2} = {f1*f2}')
     print(f'{f1} / {f2} = {f1/f2}')
+    
+    # Ejemplos de comparación
+    f3 = Fraction(1, 2)
+    f4 = Fraction(2, 2)
+
+    print('\nTest 4: Comparaciones de fracciones')
+    print('-'*40)
+    print(f'{f3} == {f4} => {f3.compare(f4)}')
+    print(f'{f4} == {f3} => {f4.compare(f3)}')
+    print(f'{f3} == {f3} => {f3.compare(f3)}')
