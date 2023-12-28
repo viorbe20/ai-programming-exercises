@@ -61,20 +61,45 @@ class Duration:
         else:
             return f"{self} es igual que {other}"
 
+    def add(self, other):
+        if isinstance(other, int):
+            total_seconds = self.__hours * 3600 + self.__minutes * 60 + self.__seconds + other
+        elif isinstance(other, Duration):
+            total_seconds = (
+                self.__hours + other.__hours) * 3600 + \
+                (self.__minutes + other.__minutes) * 60 + \
+                self.__seconds + other.__seconds
+        else:
+            raise TypeError("Unsupported operand type")
+
+        return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
+
     def __add__(self, other):
-        total_seconds = (self.__hours + other.hours) * 3600 + \
-            (self.__minutes + other.minutes) * 60 + self.__seconds + other.seconds
+        return self.add(other)
+
+    def subs(self, other):
+        if isinstance(other, int):
+            total_seconds = self.__hours * 3600 + self.__minutes * 60 + self.__seconds - other
+        elif isinstance(other, Duration):
+            total_seconds = (
+                self.__hours - other.__hours) * 3600 + \
+                (self.__minutes - other.__minutes) * 60 + \
+                self.__seconds - other.__seconds
+        else:
+            raise TypeError("Unsupported operand type")
+
         return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
     def __sub__(self, other):
-        total_seconds = (self.__hours - other.hours) * 3600 + \
-            (self.__minutes - other.minutes) * 60 + self.__seconds - other.seconds
-        return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
+        return self.subs(other)
 
     def __rsub__(self, other):
-        total_seconds = (other.hours - self.__hours) * 3600 + \
-            (other.minutes - self.__minutes) * 60 + other.seconds - self.__seconds
-        return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
+        if isinstance(other, int):
+            total_seconds = other - (
+                self.__hours * 3600 + self.__minutes * 60 + self.__seconds)
+            return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
+        else:
+            raise TypeError("Unsupported operand type")
 
 
 if __name__ == "__main__":
@@ -99,6 +124,7 @@ if __name__ == "__main__":
 
     t6 = Duration(10, 20, 60)
     t7 = Duration(10, 20, 10)
+    SECONDS_ = 10
 
     print('\nTest 2: Comparaciones')
     print('-'*20)
@@ -106,3 +132,14 @@ if __name__ == "__main__":
     print(f"Duration(10, 20, 10) == Duration(10, 20, 60) => {t7.compare(t6)}")
     print(f"Duration(10, 20, 60) == Duration(10, 20, 60) => {t6.compare(t6)}")
     
+    # Test 3. Addition and substraction seconds
+    
+    t6_plus_10 = t6 + 10
+    t6_minus_10 = t6 - 70
+    t6_rsub_10 = 10 - t6
+    
+    print('\nTest 3: Sumar y restar segundos')
+    print('-'*20)
+    print(f"Duration(10, 20, 60) + 10 => {t6_plus_10}")
+    print(f"Duration(10, 20, 60) - 10 => {t6_minus_10}")
+    print(f"10 - Duration(10, 20, 60) => {t6_rsub_10}")
