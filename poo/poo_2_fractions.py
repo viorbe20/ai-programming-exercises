@@ -81,6 +81,38 @@ class Fraction:
         else:
             raise ValueError('Dato inválido para la resta.')
 
+    def __mul__(self, other):
+        if isinstance(other, Fraction):
+            return Fraction(self.__num * other.__num, self.__den * other.__den).simplify_fraction()
+        elif isinstance(other, int):
+            return Fraction(self.__num * other, self.__den).simplify_fraction()
+        else:
+            raise ValueError('Dato inválido para la multiplicación.')
+
+    def __rmul__(self, other):
+        if isinstance(other, int):
+            return Fraction(self.__num * other, self.__den).simplify_fraction()
+        else:
+            raise ValueError('Dato inválido para la multiplicación.')
+    def __truediv__(self, other):
+            if isinstance(other, Fraction):
+                if other.__num == 0:
+                    raise ValueError("No se puede dividir por cero.")
+                return Fraction(self.__num * other.__den, self.__den * other.__num).simplify_fraction()
+            elif isinstance(other, int):
+                if other == 0:
+                    raise ValueError("No se puede dividir por cero.")
+                return Fraction(self.__num, self.__den * other).simplify_fraction()
+            else:
+                raise ValueError('Dato inválido para la división.')
+
+    def __rtruediv__(self, other):
+        if isinstance(other, int):
+            if self.__num == 0:
+                raise ValueError("No se puede dividir por cero.")
+            return Fraction(self.__den * other, self.__num).simplify_fraction()
+        else:
+            raise ValueError('Dato inválido para la división.')
     def simplify_fraction(self):
         gcd = Fraction.get_gcd(self.__num, self.__den)
         self.__num //= gcd
@@ -110,9 +142,7 @@ class Fraction:
 
 if __name__ == "__main__":
 
-    # Test 1: create fractions
-    f1 = Fraction(6, 3)
-    
+    # Test 1: create fractions    
     print('\nTest 1: Crear fracciones' )
     print('-'*40)
     print(f'Fraction(6, 3) => {Fraction(6, 3)}')
@@ -127,5 +157,13 @@ if __name__ == "__main__":
     except ValueError as e:
         print(f'Fraction(5, 0) => Error: {e}')
 
-    # Test 3: add and substract fractions
-    
+    # Test 3: fractions operations
+    f1 = Fraction(3, 2)
+    f2 = Fraction(4, 2)
+
+    print('\nTest 3: Operaciones con fracciones' )
+    print('-'*40)
+    print(f'{f1} + {f2} = {f1+f2}')
+    print(f'{f1} - {f2} = {f1-f2}')
+    print(f'{f1} * {f2} = {f1*f2}')
+    print(f'{f1} / {f2} = {f1/f2}')
