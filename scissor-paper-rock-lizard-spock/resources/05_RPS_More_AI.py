@@ -9,9 +9,6 @@ class GameAction(IntEnum):
     Rock = 0
     Paper = 1
     Scissors = 2
-    # add elements
-    Lizard = 3
-    Spock = 4
 
 
 class GameResult(IntEnum):
