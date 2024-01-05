@@ -16,7 +16,8 @@ cube = [n**3 for n in number]
 # Array 2 dimensions. One array contains the 3 arrays of numbers
 data = [number, square, cube]
 
-# One array containing arrays with each row. zip(*) unpacks a list of arrays into a list of tuples.
+# zip(*data) == indexes into a tupla. i.e. (number[0], square[0], cube[0])(number[1], square[1], cube[1]) etc
+# list(map(list, ...)): tranforms hte last tuple into a list 
 data = list(map(list, zip(*data))) 
 
 print("\n")
