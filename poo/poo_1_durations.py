@@ -19,25 +19,20 @@ pero no nos gustan, vamos a hacer una nueva que se llamará Duration y será inm
 Author: Virginia Ordoño Bernier
 Date: november 2023
 """
+from typeguard import typechecked
 
+@typechecked
 class Duration:
 
-    def __init__(self, hours=0, minutes=0, seconds=0):
-
-        # Data type validation
-        self._validate_type(hours, "Horas")
-        self._validate_type(minutes, "Minutos")
-        self._validate_type(seconds, "Segundos")
+    def __init__(self, hours:int=0, minutes:int = 0, seconds:int=0):
 
         # Private attributes (name mangling) 
-        total_seconds = hours * 3600 + minutes * 60 + seconds
-        self.__hours, accumulate = divmod(total_seconds, 3600)
+        total__seconds = hours * 3600 + minutes * 60 + seconds
+        self.__hours, accumulate = divmod(total__seconds, 3600)
         self.__minutes, self.__seconds = divmod(accumulate, 60)
-
-    @staticmethod
-    def _validate_type(value, name):
-        if not isinstance(value, int):
-            raise TypeError(f"{name} debe ser un número entero")
+    
+    def _get_total_seconds(self):
+        return self.__hours * 3600 + self.__minutes * 6
 
     def __str__(self):
         return f"{self.__hours:02d}h:{self.__minutes:02d}m:{self.__seconds:02d}s"
@@ -53,6 +48,7 @@ class Duration:
 
     def __ge__(self, other):
         return (self > other) or (self == other)
+    
     def compare(self, other):
         if self < other:
             return f"{self} es menor que {other}"
@@ -100,7 +96,6 @@ class Duration:
             return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
         else:
             raise TypeError("Valor no válido")
-
 
 if __name__ == "__main__":
 
