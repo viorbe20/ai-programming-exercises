@@ -19,6 +19,7 @@ pero no nos gustan, vamos a hacer una nueva que se llamará Duration y será inm
 Author: Virginia Ordoño Bernier
 Date: november 2023
 """
+from typing import Type
 from typeguard import typechecked
 
 @typechecked
@@ -31,23 +32,21 @@ class Duration:
         self.__hours, accumulate = divmod(total__seconds, 3600)
         self.__minutes, self.__seconds = divmod(accumulate, 60)
     
+    @staticmethod
     def _get_total_seconds(self):
-        return self.__hours * 3600 + self.__minutes * 6
-
+        return self.__hours * 3600 + self.__minutes * 60 + self.__seconds
+    
     def __str__(self):
         return f"{self.__hours:02d}h:{self.__minutes:02d}m:{self.__seconds:02d}s"
 
-    def __lt__(self, other):
-        return (self.__hours, self.__minutes, self.__seconds) < (other.__hours, other.__minutes, other.__seconds)
+    def __lt__(self, other: Type['Duration']): # controlling type of 'other'
+        return self._get_total_seconds() < other._get_total_seconds()
 
-    def __le__(self, other):
-        return (self < other) or (self == other)
+    def __eq__(self, other: Type['Duration']): # controlling type of 'other'
+        return self._get_total_seconds() == other._get_total_seconds()
 
-    def __gt__(self, other):
-        return (self.__hours, self.__minutes, self.__seconds) > (other.__hours, other.__minutes, other.__seconds)
-
-    def __ge__(self, other):
-        return (self > other) or (self == other)
+    def __gt__(self, other: Type['Duration']): # controlling type of 'other'
+        return self._get_total_seconds() > other._get_total_seconds()
     
     def compare(self, other):
         if self < other:
