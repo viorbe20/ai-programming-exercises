@@ -87,7 +87,6 @@ class Fraction:
         elif not isinstance(other, Fraction):
             raise TypeError('Operador invalido para "<".')
         return (self.__num / self.__den) < (other.num / other.den)
-    
 
     def __gt__(self, other) -> bool:
     # Only int or Fraction
@@ -104,114 +103,54 @@ class Fraction:
         elif not isinstance(other, Fraction):
             raise TypeError('Operador invalido para "==".')
         return (self.__num / self.__den) == (other.num / other.den)
-    def __sub__(self, other):
-        if isinstance(other, Fraction):
-            lcm = Fraction.get_lcm(self.__den, other.__den)
-            num1 = self.__num * (lcm // self.__den)
-            num2 = other.__num * (lcm // other.__den)
-            return Fraction(num1 - num2, lcm).simplify_fraction()
-        else:
-            raise ValueError('Dato inválido para la resta.')
-
-    def __rsub__(self, other):
-        if isinstance(other, Fraction):
-            lcm = Fraction.get_lcm(self.__den, other.__den)
-            num1 = self.__num * (lcm // self.__den)
-            num2 = other.__num * (lcm // other.__den)
-            return Fraction(num2 - num1, lcm).simplify_fraction()
-        else:
-            raise ValueError('Dato inválido para la resta.')
-
-    def __mul__(self, other):
-        if isinstance(other, Fraction):
-            return Fraction(self.__num * other.__num, self.__den * other.__den).simplify_fraction()
-        elif isinstance(other, int):
-            return Fraction(self.__num * other, self.__den).simplify_fraction()
-        else:
-            raise ValueError('Dato inválido para la multiplicación.')
-
-    def __rmul__(self, other):
-        if isinstance(other, int):
-            return Fraction(self.__num * other, self.__den).simplify_fraction()
-        else:
-            raise ValueError('Dato inválido para la multiplicación.')
-    def __truediv__(self, other):
-            if isinstance(other, Fraction):
-                if other.__num == 0:
-                    raise ValueError("No se puede dividir por cero.")
-                return Fraction(self.__num * other.__den, self.__den * other.__num).simplify_fraction()
-            elif isinstance(other, int):
-                if other == 0:
-                    raise ValueError("No se puede dividir por cero.")
-                return Fraction(self.__num, self.__den * other).simplify_fraction()
-            else:
-                raise ValueError('Dato inválido para la división.')
-
-    def __rtruediv__(self, other):
-        if isinstance(other, int):
-            if self.__num == 0:
-                raise ValueError("No se puede dividir por cero.")
-            return Fraction(self.__den * other, self.__num).simplify_fraction()
-        else:
-            raise ValueError('Dato inválido para la división.')
-    def simplify_fraction(self):
-        gcd = Fraction.get_gcd(self.__num, self.__den)
-        self.__num //= gcd
-        self.__den //= gcd
-        return self
-
-    @staticmethod
-    def _is_zero_den(den):
-        if den == 0:
-            raise ValueError("El denominador no puede ser 0.")
-
-    @staticmethod
-    def get_gcd(den1, den2):
-        den1 = abs(den1)
-        den2 = abs(den2)
-
-        while den2 > 0:
-            rest = den1 % den2
-            den1, den2 = den2, rest
-
-        return den1
-
-    @staticmethod
-    def get_lcm(den1, den2):
-        return abs(den1 * den2) // Fraction.get_gcd(den1, den2)
-
-    def __eq__(self, other):
-         if isinstance(other, Fraction):
-             return (self.__num, self.__den) == (other.__num, other.__den)
-         else:
-             return False
-
-    def __lt__(self, other):
-        if isinstance(other, Fraction):
-            cross_product = self.__num * other.__den - other.__num * self.__den
-            return cross_product < 0
-        else:
-            raise ValueError('Dato inválido para la comparación.')
-
-    def __le__(self, other):
-        return self == other or self < other
-
-    def __gt__(self, other):
-        return not (self <= other)
-
-    def __ge__(self, other):
-        return not (self < other)
-
-    def __ne__(self, other):
-        return not self == other
     
-    def compare(self, other):
-        if self < other:
-            return f"{self} es menor que {other}"
-        elif self > other:
-            return f"{self} es mayor que {other}"
-        else:
-            return f"{self} es igual que {other}"
+    # Arithmetic operations
+    
+    def __add__(self, other):
+        # Other == int or fractions
+        if isinstance(other, int):
+            other = Fraction(other, 1)
+        elif not isinstance(other, Fraction):
+            raise TypeError("Sólo se pueden sumar fracciones o enteros.")
+
+        # Get the least common multiple (LCM) of the denominators
+        lcm = Fraction.get_lcm(self.den, other.den)
+
+        # Calculate the new numerators for the summed fractions
+        new_num1 = self.num * (lcm // self.den)
+        new_num2 = other.num * (lcm // other.den)
+
+        # Calculate the new numerator by adding the obtained numerators
+        result_num = new_num1 + new_num2
+
+        # Create and return the new resulting fraction
+        return Fraction(result_num, lcm)
+    
+    def __radd__(self, other:int): 
+        return self + other
+    
+    def __sub__(self, other):
+        # Other == int or fractions
+        if isinstance(other, int):
+            other = Fraction(other, 1)
+        elif not isinstance(other, Fraction):
+            raise TypeError("Sólo se pueden restar fracciones o enteros.")
+        
+        # Get the least common multiple (LCM) of the denominators
+        lcm = Fraction.get_lcm(self.den, other.den)
+
+        # Calculate the new numerators for the subtracted fractions
+        new_num1 = self.num * (lcm // self.den)
+        new_num2 = other.num * (lcm // other.den)
+
+        # Calculate the new numerator by subtracting the obtained numerators
+        result_num = new_num1 - new_num2
+
+        # Create and return the new resulting fraction
+        return Fraction(result_num, lcm)
+
+    def __rsub__(self, other:int):
+        return Fraction(other, 1) - other
 
 if __name__ == "__main__":
 
