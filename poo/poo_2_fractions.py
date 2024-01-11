@@ -127,7 +127,7 @@ class Fraction:
         return Fraction(result_num, lcm)
     
     def __radd__(self, other:int): 
-        return self + other
+        return self + Fraction(other, 1)
     
     def __sub__(self, other):
         # Other == int or fractions
@@ -161,7 +161,23 @@ class Fraction:
         return Fraction(self.num * other.num, self.den * other.den)
     
     def __rmul__(self, other:int): 
-        return self * other
+        return Fraction(other, 1) * self
+    
+    def __truediv__(self, other):
+        # Other == int or fractions
+        if isinstance(other, int):
+            other = Fraction(other, 1)
+        elif not isinstance(other, Fraction):
+            raise TypeError("Sólo se pueden dividir fracciones o enteros.")
+
+        # Multiply by the reciprocal (invert the numerator and denominator)
+        reciprocal = Fraction(other.den, other.num)
+
+        # Use the reciprocal for division
+        return self * reciprocal
+    
+    def __rtruediv__(self, other:int):
+        return Fraction(other, 1) / self
 
 if __name__ == "__main__":
 
@@ -205,6 +221,12 @@ if __name__ == "__main__":
     print(f'{f2} * {f1} = {f2 * f1}')
     print(f'{f1} * {num} = {f1 * num}')
     print(f'{num} * {f1} = {num * f1}')
+    print('\nDivisión' )
+    print('-'*40)
+    print(f'{f1} / {f2} = {f1 / f2}')
+    print(f'{f2} / {f1} = {f2 / f1}')
+    print(f'{f1} / {num} = {f1 / num}')
+    print(f'{num} / {f1} = {num / f1}')
 
     
     # Ejemplos de comparación
