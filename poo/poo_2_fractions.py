@@ -170,15 +170,21 @@ if __name__ == "__main__":
         print(f'Fraction(5, 0) => Error: {e}')
 
     # Test 3: fractions operations
-    f1 = Fraction(3, 2)
-    f2 = Fraction(4, 2)
+    f1 = Fraction(3, 8)
+    f2 = Fraction(4, 4)
+    num = 5 
 
     print('\nTest 3: Operaciones con fracciones' )
     print('-'*40)
-    print(f'{f1} + {f2} = {f1+f2}')
-    print(f'{f1} - {f2} = {f1-f2}')
-    print(f'{f1} * {f2} = {f1*f2}')
-    print(f'{f1} / {f2} = {f1/f2}')
+    print(f'{f1} + {f2} = {f1 + f2}')
+    print(f'{f2} + {f1} = {f2 + f1}')
+    print(f'{f1} + {num} = {f1 + num}')
+    print(f'{num} + {f1} = {num + f1}')
+    print(f'{f1} - {f2} = {f1 - f2}')
+    print(f'{f2} - {f1} = {f2 - f1}')
+    print(f'{f1} - {num} = {f1 - num}')
+    print(f'{num} - {f1} = {num - f1}')
+
     
     # Ejemplos de comparación
     f3 = Fraction(10, 2)
