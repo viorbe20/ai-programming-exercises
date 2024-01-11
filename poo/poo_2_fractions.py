@@ -16,56 +16,94 @@ Crea una clase, y pruébala, que modele fracciones. Debe permitir:
 Author: Virginia Ordoño Bernier
 Date: november 2023
 """
+from typeguard import typechecked
+
+@typechecked
 class Fraction:
 
-    def __init__(self, num, den=1):
-        # Validates that the denominator is not zero
+    def __init__(self, num: int, den: int = 1):
         self._is_zero_den(den)
-
-        # Initializes the numerator and denominator
-        self.__num = num
-        self.__den = den
-
+        self.num = num
+        self.den = den
+    
     @property
     def num(self):
         return self.__num
-
+    
     @property
     def den(self):
         return self.__den
-
+    
     @num.setter
-    def num(self, value):
-        if not isinstance(value, int):
-            raise ValueError('El numerador debe ser un número entero.')
-
-        self.__num = value
-
+    def num(self, new_value: int):
+        self.__num = new_value
+            
     @den.setter
-    def den(self, value):
-        if not isinstance(value, int):
-            raise ValueError('El denominador debe ser un número entero.')
-
-        self._is_zero_den(value)
-        self.__den = value
-
-    def __str__(self):
+    def den(self, new_value: int):
+        self._is_zero_den(new_value)
+        self.__den = new_value
+    
+    @staticmethod
+    def _is_zero_den(den):
+        if den == 0:
+            raise ValueError("El denominador no puede ser 0.")
+    
+    def __str__(self) -> str:
         return f'{self.__num}/{self.__den}'
-
+    
     def __repr__(self):
         # Formal string representation of a Fraction object
         return f'Fraction({self.__num}, {self.__den})'
+    
+    # Fractions operations
+    def simplify_fraction(self):
+        gcd = Fraction.get_gcd(self.__num, self.__den)
+        self.__num //= gcd
+        self.__den //= gcd
+        return self
+    
+    @staticmethod
+    def get_gcd(den1, den2):
+        den1 = abs(den1)
+        den2 = abs(den2)
 
-    def __add__(self, other):
-        # Returns a new simplified Fraction object
-        if isinstance(other, Fraction):
-            lcm = Fraction.get_lcm(self.__den, other.__den)
-            num1 = self.__num * (lcm // self.__den)
-            num2 = other.__num * (lcm // other.__den)
-            return Fraction(num1 + num2, lcm).simplify_fraction()
-        else:
-            raise ValueError('Dato inválido para la suma.')
+        while den2 > 0:
+            rest = den1 % den2
+            den1, den2 = den2, rest
 
+        return den1
+
+    @staticmethod
+    def get_lcm(den1, den2):
+        #print(abs(den1 * den2) // Fraction.get_gcd(den1, den2))
+        return abs(den1 * den2) // Fraction.get_gcd(den1, den2)
+
+    # Comparison operations        
+    
+    def __lt__(self, other) -> bool:
+    # Only int or Fraction
+        if isinstance(other, int):
+            other = Fraction(other, 1)
+        elif not isinstance(other, Fraction):
+            raise TypeError('Operador invalido para "<".')
+        return (self.__num / self.__den) < (other.num / other.den)
+    
+
+    def __gt__(self, other) -> bool:
+    # Only int or Fraction
+        if isinstance(other, int):
+            other = Fraction(other, 1)
+        elif not isinstance(other, Fraction):
+            raise TypeError('Operador invalido para ">".')
+        return (self.__num / self.__den) > (other.num / other.den)
+    
+    def __eq__(self, other) -> bool:
+        # Only int or Fraction
+        if isinstance(other, int):
+            other = Fraction(other, 1)
+        elif not isinstance(other, Fraction):
+            raise TypeError('Operador invalido para "==".')
+        return (self.__num / self.__den) == (other.num / other.den)
     def __sub__(self, other):
         if isinstance(other, Fraction):
             lcm = Fraction.get_lcm(self.__den, other.__den)
@@ -204,11 +242,14 @@ if __name__ == "__main__":
     print(f'{f1} / {f2} = {f1/f2}')
     
     # Ejemplos de comparación
-    f3 = Fraction(1, 2)
-    f4 = Fraction(2, 2)
+    f3 = Fraction(10, 2)
+    num1 = 5
 
-    print('\nTest 4: Comparaciones de fracciones')
+    print('\nTest 4: Comparaciones con fracciones')
     print('-'*40)
-    print(f'{f3} == {f4} => {f3.compare(f4)}')
-    print(f'{f4} == {f3} => {f4.compare(f3)}')
-    print(f'{f3} == {f3} => {f3.compare(f3)}')
+    print(f'{f3} < {f3} => {f3 < f3}')
+    print(f'{f3} > {f3} => {f3 > f3}')
+    print(f'{f3} == {f3} => {f3 == f3}')
+    print(f'{f3} < {num1} => {f3 < num1}')
+    print(f'{f3} > {num1} => {f3 > num1}')
+    print(f'{f3} == {num1} => {f3 == num1}')
