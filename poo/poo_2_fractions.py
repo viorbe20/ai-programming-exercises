@@ -186,7 +186,6 @@ if __name__ == "__main__":
     print('-'*40)
     print(f'Fraction(6, 3) => {Fraction(6, 3)}')
     
-
     # Test 2: 0 denominator
     print('\nTest 2: Denominador 0' )
     print('-'*40)
