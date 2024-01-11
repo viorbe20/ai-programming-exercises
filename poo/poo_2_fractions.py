@@ -152,6 +152,17 @@ class Fraction:
     def __rsub__(self, other:int):
         return Fraction(other, 1) - other
 
+    def __mul__(self, other):
+        # Other == int or fractions
+        if isinstance(other, int):
+            other = Fraction(other, 1)
+        elif not isinstance(other, Fraction):
+            raise TypeError("Sólo se pueden multiplicar fracciones o enteros.")
+        return Fraction(self.num * other.num, self.den * other.den)
+    
+    def __rmul__(self, other:int): 
+        return self * other
+
 if __name__ == "__main__":
 
     # Test 1: create fractions    
@@ -176,14 +187,24 @@ if __name__ == "__main__":
 
     print('\nTest 3: Operaciones con fracciones' )
     print('-'*40)
+    print('\nSuma' )
+    print('-'*40)
     print(f'{f1} + {f2} = {f1 + f2}')
     print(f'{f2} + {f1} = {f2 + f1}')
     print(f'{f1} + {num} = {f1 + num}')
     print(f'{num} + {f1} = {num + f1}')
+    print('\nResta' )
+    print('-'*40)
     print(f'{f1} - {f2} = {f1 - f2}')
     print(f'{f2} - {f1} = {f2 - f1}')
     print(f'{f1} - {num} = {f1 - num}')
     print(f'{num} - {f1} = {num - f1}')
+    print('\nMultiplicación' )
+    print('-'*40)
+    print(f'{f1} * {f2} = {f1 * f2}')
+    print(f'{f2} * {f1} = {f2 * f1}')
+    print(f'{f1} * {num} = {f1 * num}')
+    print(f'{num} * {f1} = {num * f1}')
 
     
     # Ejemplos de comparación
