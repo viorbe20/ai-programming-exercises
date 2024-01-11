@@ -17,11 +17,12 @@ Author: Virginia Ordoño Bernier
 Date: november 2023
 """
 from typeguard import typechecked
+import math
 
 @typechecked
 class Fraction:
 
-    def __init__(self, num: int, den: int):
+    def __init__(self, num: int, den: int):   
         self.num = num
         self.den = den
     
@@ -35,12 +36,16 @@ class Fraction:
     
     @num.setter
     def num(self, new_value: int):
-        self.__num = new_value
+        gcd = math.gcd(num, self.den)
+        self.__num = new_value // gcd
+        self.__den = self.den // gcd
             
     @den.setter
     def den(self, new_value: int):
         self._is_zero_den(new_value)
-        self.__den = new_value
+        gcd = math.gcd(num, self.den)
+        self.__num = new_value // gcd
+        self.__den = self.den // gcd
     
     @staticmethod
     def _is_zero_den(den):
