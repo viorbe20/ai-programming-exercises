@@ -11,25 +11,15 @@ Este proyecto es una recreación del juego Tic Tac Toe basado en un tutorial de 
 [1. Introducción](#1-introducción)
 
 ### 1. Introducción
-El objetivo de este ejercicio es crear un juego de Tic-Tac-Toe donde la máquina nunca pierde. Para esto se utilizará el algoritmo *Minimax*, el cual representa una decisión construida sobre la idea de maximizar las posibilidades de que la máquina gane y minimizar las posibilidades de que el oponente pierda en cada uno de los pasos del juego. 
+Este repositorio contiene una implementación de un juego Tic Tac Toe en Python, con la particularidad de que uno de sus jugadores es la máquina.
 
-En cada jugada se intentarán recrear todos los movimientos decidiendo así cuál es el más óptimo para nuestro cometido. Mediante la *utility function* estimaremos los resultados cuando la partida finalice ya sea porque alguno gane o por empate.
+En este juego, el __algoritmo minimax__ será la clave para garantizar que la máquina nunca pierda en el juego, siempre ganando o empatando. El objetivo de este algoritmo es maximizar la victoria y minimizar la pérdida del oponente en cada movimiento.
 
-Esta función se compone de:
+Otro elemento fundamental será la __función de utilidad__, la cual mide la valía del resultado final en el árbol de decisiones del juego. Su objetivo es la optimización para ganar en la menor cantidad de pasos posibles. 
 
-> **Utility Function**
->> elemento1 * elemento2 = resultado
-> - elemento1
->      - 0: en caso de empate
->      - 1: gana X
->      - -1: gana O 
-> - elemento2: número de casillas vacías más 1
+Se han implementado dos versiones: una por consola y otra con interfaz gráfica
 
-![Utility function](./img/utility-function.png)
-
-El valor 3 será el valor buscado para maximizar X.
-
-### 2. Funciones
+### 2. Funciones Tic Tac Toe por consola
 
 #### __init__()
 En resumen, la función __init__ inicializa una instancia de la clase TicTacToe con un tablero vacío y sin un ganador inicial. 
@@ -40,6 +30,9 @@ En cada iteración se crea una lista de sublistas, donde cada sublista represent
 #### print_board_nums()
 Imprime un tablero inicial de 3x3 con números del 0 al 8.
 Cada número representa una posición en el tablero, ofreciendo una referencia visual para los jugadores.
+
+#### available_moves()
+Devuelve una lista con los índices de aquellas casilla que están vacías
 
 
 

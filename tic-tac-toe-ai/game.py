@@ -28,9 +28,10 @@ class TicTacToe:
         #print numbers inside the 3x3 board
         for row in number_board:
             print('| ' + ' | ' .join(row) + ' |')
-    
+    '''
+    Returns a list with indexes from empty squares on the board 
+    '''
     def available_moves(self):
-        # returns a list with indexes from empty squares on the board 
         return [i for i, spot in enumerate(self.board) if spot == ' ']
     
     def empty_squares(self):
