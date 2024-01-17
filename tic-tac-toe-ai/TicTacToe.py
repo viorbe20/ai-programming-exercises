@@ -102,11 +102,11 @@ class TicTacToeGUI:
 
             if self.game.current_winner:
                 winner = self.game.current_winner
-                messagebox.showinfo("Tic Tac Toe", f"{winner} wins!")
+                messagebox.showinfo(f"{winner} wins!")
                 self.reset_game()
 
             elif not self.game.empty_squares():
-                messagebox.showinfo("Tic Tac Toe", "It's a tie!")
+                messagebox.showinfo("Tic Tac Toe", "¡Empate!")
                 self.reset_game()
 
             else:
@@ -122,11 +122,11 @@ class TicTacToeGUI:
 
             if self.game.current_winner:
                 winner = self.game.current_winner
-                messagebox.showinfo("Tic Tac Toe", f"{winner} wins!")
+                messagebox.showinfo(f"¡Ha ganado {winner}!")
                 self.reset_game()
 
             elif not self.game.empty_squares():
-                messagebox.showinfo("Tic Tac Toe", "¡Empate!")
+                messagebox.showinfo("¡Empate!")
                 self.reset_game()
 
     def reset_game(self):

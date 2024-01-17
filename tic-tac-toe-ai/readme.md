@@ -29,26 +29,66 @@ Al ejecutar el programa, se muestra un tablero de 3 x 3 y cuyas casillas contien
 
 ![Tablero con números](./img/board_numbers.png)
 
-#### __init__()
+#### player.py
+
+__Clase Player__
+Representar un jugador en el juego.
+
+##### __init__()
+Inicializa una instancia de la clase _Player_ con una letra asignada al jugador ('X' o 'O').
+
+##### get_move()
+Método abstracto que debe ser implementado por las subclases. Representa el movimiento que realizará el jugador en el juego.
+
+__Clase HumanPlayer__
+La clase HumanPlayer hereda de la clase base _Player_ y representa a un jugador humano que realiza movimientos a través de la entrada del usuario.
+
+##### __init__(self, letter)
+El constructor de la clase HumanPlayer llama al constructor de la clase base con la letra asignada al jugador.
+
+##### get_move(self, game)
+Solicita al usuario ingresar un número del 0 al 8, verificando la validez del movimiento antes de devolverlo.
+
+__Clase GeniusComputerPlayer__
+La clase GeniusComputerPlayer hereda de la clase base _Player_ y representa a un jugador máquina que utiliza el algoritmo minimax para tomar decisiones.
+
+##### __init__()
+Llama al constructor de la clase base con la letra asignada al jugador.
+
+##### get_move()
+Implementa la lógica para que la máquina realice movimientos inteligentes utilizando el algoritmo minimax.
+
+##### minimax(self, state, player)
+El método minimax es una función recursiva que evalúa el estado del juego y devuelve la mejor posición y puntaje posible para el jugador actual utilizando el algoritmo minimax.
+
+##### Flujo del algoritmo minimax:
+- Verifica si el último movimiento resultó en un ganador o empate.
+- Asigna valores de puntaje basados en la situación del juego.
+- Explora todas las posibles jugadas y selecciona la mejor opción utilizando recursión.
+- Este algoritmo permite que la máquina tome decisiones óptimas para maximizar su ventaja o minimizar su desventaja, considerando todas las posibles líneas de juego.
+
+#### game.py
+
+##### __init__()
 En resumen, la función __init__ inicializa una instancia de la clase TicTacToe con un tablero vacío y sin un ganador inicial. 
 
-#### print_board()
+##### print_board()
 En cada iteración se crea una lista de sublistas, donde cada sublista representa una fila del tablero. Luego, el bucle for recorre cada fila y las imprime en el formato deseado.
 
-#### print_board_nums()
+##### print_board_nums()
 Imprime un tablero inicial de 3x3 con números del 0 al 8.
 Cada número representa una posición en el tablero, ofreciendo una referencia visual para los jugadores.
 
-#### available_moves()
+##### available_moves()
 Devuelve una lista con los índices de aquellas casilla que están vacías. Esta información será útil para cuando tengamos que comproabr la disponibilidad de una casilla.
 
-#### empty_squares()
+##### empty_squares()
 Devuelve _true_ si al menos hay una casilla vacía. Esta función será útil para determinar si el juego sigue o no, cada vez que se produzca un movimiento. Para el algoritmo minimax, es crucial determinar si el juego ha llegado a su fin (victoria o empate) durante la simulación de los movimientos.
 
-### num_empty_squares()
+##### num_empty_squares()
 Devuelve el número exacto de casillas que quedan libres. El número de casillas vacías podría influir en la evaluación de la utilidad. Por ejemplo, podría considerarse un estado mejor si hay más casillas vacías disponibles, ya que eso significa más oportunidades para el jugador. Conocer la cantidad exacta de casillas vacías serviría para identificar rápidamente estados terminales o situaciones donde no es necesario explorar más movimientos puede mejorar la eficiencia del algoritmo, lo cual es fundamental para el algoritmo minizax.
 
-### make_move()
+##### make_move()
 Comprueba si el último movimiento es válido, en cuyo caso lo imprime. Después comprueba si ese movieminto ha resultado en ganador. Si lo es, guarda el ganador en una variable.
 
 Flujo de la función:
@@ -61,7 +101,7 @@ Flujo de la función:
 Resultado de la Función.
 > Devuelve _True_ si el movimiento es válido y se ha realizado correctamente y _False_ si el movimiento no es válido.
 
-### winner()
+##### winner()
 Comprueba si el último movimiento es ganador, haciendo una verificación de las filas, columnas y diagonales en busca de tres símbolos consecutivos del mismo jugador.
 
 Flujo de la función:
@@ -83,8 +123,7 @@ Flujo de la función:
 - Sin Ganador.
 > Si ninguna de las condiciones anteriores es verdadera, la función retorna False, indicando que no hay un ganador después del último movimiento.
 
-
-### play()
+##### play()
 Coordina todo el juego, permite que los jugadores realicen movimientos de manera alterna, actualiza el tablero y verifica si hay un ganador o un empate.
 
 Flujo de la función:
