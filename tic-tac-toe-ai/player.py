@@ -16,14 +16,14 @@ class HumanPlayer(Player):
         valid_square = False
         val = None
         while not valid_square:
-            square = input(f'Turno de {self.letter}. Introduce un número de 0 a 8: ')
+            square = input(f'\nTurno de {self.letter}. Introduce un número de 0 a 8: ')
             try:
                 val = int(square)
                 if val not in game.available_moves():
                     raise ValueError
                 valid_square = True
             except ValueError:
-                print('Casilla incorrecta. Inténtalo de nuevo.')
+                print('\nCasilla incorrecta. Inténtalo de nuevo.')
         return val
 
 class GeniusComputerPlayer(Player):

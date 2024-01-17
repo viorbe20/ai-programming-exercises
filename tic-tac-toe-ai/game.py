@@ -14,6 +14,7 @@ class TicTacToe:
     Print current board state (a list of nine) iterating thorugh each row
     '''
     def print_board(self):
+        print('\n')
         for row in [self.board[i*3:(i+1)*3] for i in range(3)]:
             print('| ' + ' | ' .join(row) + ' |')
     
@@ -23,6 +24,7 @@ class TicTacToe:
     '''
     @staticmethod
     def print_board_nums():
+        print('\n')
         number_board = [[str(i) for i in range(j*3, (j+1)*3)] for j in range(3)]
         
         #print numbers inside the 3x3 board
@@ -34,29 +36,38 @@ class TicTacToe:
     def available_moves(self):
         return [i for i, spot in enumerate(self.board) if spot == ' ']
     
+    '''
+    Returns true if there is, at least, one empty square
+    '''
     def empty_squares(self):
-        # check if there are empty squares on the board and returns True if so
         return ' ' in self.board
     
+    '''
+    Returns the exact number of empty squares on the board
+    '''
     def num_empty_squares(self):
-        # returns the exact number of empty squares on the board
         return self.board.count(' ')
     
+    '''
+    Check if the last move is valid. If valid, update the game board with the symbol.
+    Check if the last move results in a new winner. If so, update the winner.
+    '''
     def make_move(self, square, letter):
-        # if valid move, assign square to letter and return True. If not, return False
+        # if valid move, assign square to letter and return True.
         if self.board[square] == ' ':
             self.board[square] = letter
             
-            # check if someone won
+            # check if someone won and if so, update it
             if self.winner(square, letter):
                 self.current_winner = letter
             return True
         return False
     
+    '''
+    Check if the last movement is a winner movement
+    '''
     def winner(self, square, letter):
         # check all the posibilities of 3 in row
-        
-        # checking the row
         row_ind = square // 3
         row = self.board[row_ind*3 : (row_ind + 1) * 3]
         if all([spot == letter for spot in row]):
@@ -81,7 +92,11 @@ class TicTacToe:
         
         # if there is no winner
         return False
-
+    
+'''
+Coordinates the entire gameplay, allowing players to make moves alternately until the game concludes.
+Manages the turn-based moves, updates the game board, and checks for a winner or a draw.
+'''
 def play(game, x_player, o_player, print_game=True):
     # returns the letter of the winner of the game or a tie
     if print_game:
@@ -90,7 +105,7 @@ def play(game, x_player, o_player, print_game=True):
     # starting letter
     letter = 'X'
     
-    # iterates while the game has empty squares
+    # loop while the game has empty squares
     while game.empty_squares():
         if letter == 'O':
             square = o_player.get_move(game)
