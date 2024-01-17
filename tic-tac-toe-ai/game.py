@@ -2,21 +2,30 @@ import time
 from player import HumanPlayer, GeniusComputerPlayer
 
 class TicTacToe:
+    '''
+    Instance of TicTacToe with an empty board and without a winner
+    It establishes board size
+    '''
     def __init__(self):
-        self.board = [' ' for _ in range(9)] # list fomr 0 to 8
+        self.board = [' ' for _ in range(9)]
         self.current_winner = None
     
+    '''
+    Print current board state (a list of nine) iterating thorugh each row
+    '''
     def print_board(self):
-        # print board with its current state
         for row in [self.board[i*3:(i+1)*3] for i in range(3)]:
             print('| ' + ' | ' .join(row) + ' |')
     
+    '''
+    Prints an initial 3x3 board with numbers from 0 to 8.
+    Number is a position in the board, providing a visual reference for players.
+    '''
     @staticmethod
     def print_board_nums():
-        # print initial board with number of square
         number_board = [[str(i) for i in range(j*3, (j+1)*3)] for j in range(3)]
         
-        #print numbers insede the 3x3 board
+        #print numbers inside the 3x3 board
         for row in number_board:
             print('| ' + ' | ' .join(row) + ' |')
     
