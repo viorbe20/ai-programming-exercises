@@ -1,13 +1,19 @@
+'''
+Este código es un programa simple de conversión de divisas que utiliza la API ExchangeRate-API 
+para obtener tasas de cambio en tiempo real.
+@author Virginia Ordoño Bernier
+@ date January 2023 
+'''
 import json
 import time
 import requests
 
 API_KEY = '7c1bcd326d635859cbbd8548'
+url_codes_list = f'https://v6.exchangerate-api.com/v6/{API_KEY}/codes'
 target_currency = ''
 source_currency = ''
 amount = ''
 
-url_codes_list = f'https://v6.exchangerate-api.com/v6/{API_KEY}/codes'
 
 payload = {}
 headers = {}
