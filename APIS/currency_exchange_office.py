@@ -1,19 +1,27 @@
 '''
-Este código es un programa simple de conversión de divisas que utiliza la API ExchangeRate-API 
-para obtener tasas de cambio en tiempo real.
+Queremos hacer una aplicación que sea capaz de convertir una cantidad de dinero en una moneda a otra moneda, 
+para ello haremos uso de la API descrita aquí (https://www.exchangerate-api.com).
+
+Al usuario/a le pediremos:
+
+La moneda desde la que queremos la conversión.
+La moneda a la que queremos convertir.
+La cantidad de dinero que tenemos.
+A tener en cuenta:
+
+Si la consulta da un error hay que indicarlo.
+Al usuario se le mostrarán las diferentes unidades de moneda antes de pedir los datos, 
+estas se pueden obtener mediante consulta en esta misma API (https://www.exchangerate-api.com/docs/supported-codes-endpoint).
+
 @author Virginia Ordoño Bernier
-@ date January 2023 
+@date January 2023 
 '''
-import json
+#import json
 import time
 import requests
 
 API_KEY = '7c1bcd326d635859cbbd8548'
 url_codes_list = f'https://v6.exchangerate-api.com/v6/{API_KEY}/codes'
-target_currency = ''
-source_currency = ''
-amount = ''
-
 
 payload = {}
 headers = {}
@@ -26,11 +34,17 @@ def main():
     time.sleep(4)
     show_currencies_codes()
     
-    source_currency = input('\nIntroduce la divisa origen: ')
-    target_currency = input('Introduce la divisa de destino: ')
-    amount = int('Introduce la cantidad: ')
+    source_currency = input('\nIntroduce la divisa origen: ').upper()
+    target_currency = input('Introduce la divisa de destino: ').upper()
     
-    get_currency_conversion(source_currency, target_currency, amount)
+    try:
+        amount = float(input('Introduce la cantidad: '))  # Use float to handle decimal numbers
+    except ValueError:
+        print("Error: La cantidad introducida no es válida.")
+        return
+
+    result = get_currency_conversion(source_currency, target_currency, amount)
+    print(result)
     
 def show_currencies_codes():
     response = requests.request("GET", url_codes_list, headers=headers, data=payload)
