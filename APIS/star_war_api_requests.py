@@ -101,3 +101,18 @@ def get_starships_by_character_index(character_index):
     
     return None
 
+def get_planet_by_character(character):
+    planet_url = character['homeworld']
+
+    try:
+        response = requests.get(planet_url)
+        planet_data = response.json()
+
+        if 'name' in planet_data:
+            planet_name = planet_data['name']
+            return planet_name
+        else:
+            return "Sin planeta"
+
+    except Exception as e:
+        print(f"Error al hacer la petición: {e}")
