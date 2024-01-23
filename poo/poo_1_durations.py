@@ -32,7 +32,6 @@ class Duration:
         self.__hours, accumulate = divmod(total__seconds, 3600)
         self.__minutes, self.__seconds = divmod(accumulate, 60)
     
-    @staticmethod
     def _get_total_seconds(self):
         return self.__hours * 3600 + self.__minutes * 60 + self.__seconds
     
@@ -48,15 +47,15 @@ class Duration:
     def __gt__(self, other: Type['Duration']): # controlling type of 'other'
         return self._get_total_seconds() > other._get_total_seconds()
     
-    def compare(self, other):
-        if self < other:
+    def compare(self, other: Type['Duration']):
+        if self._get_total_seconds() < other._get_total_seconds():
             return f"{self} es menor que {other}"
-        elif self > other:
+        elif  self._get_total_seconds() > other._get_total_seconds():
             return f"{self} es mayor que {other}"
         else:
             return f"{self} es igual que {other}"
 
-    def add(self, other):
+    def __add__(self, other):
         if isinstance(other, int):
             total_seconds = self.__hours * 3600 + self.__minutes * 60 + self.__seconds + other
         elif isinstance(other, Duration):
@@ -69,10 +68,10 @@ class Duration:
 
         return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
-    def __add__(self, other):
-        return self.add(other)
+    def __radd__(self, other):
+        return self + other
 
-    def subs(self, other):
+    def __sub__(self, other):
         if isinstance(other, int):
             total_seconds = self.__hours * 3600 + self.__minutes * 60 + self.__seconds - other
         elif isinstance(other, Duration):
@@ -85,16 +84,8 @@ class Duration:
 
         return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
 
-    def __sub__(self, other):
-        return self.subs(other)
-
-    def __rsub__(self, other):
-        if isinstance(other, int):
-            total_seconds = other - (
-                self.__hours * 3600 + self.__minutes * 60 + self.__seconds)
-            return Duration(total_seconds // 3600, (total_seconds % 3600) // 60, total_seconds % 60)
-        else:
-            raise TypeError("Valor no válido")
+    def __rsub__(self, other: int): # Only for a substraction like: int - Duration. Int 
+        return Duration(0, 0, other) - self
 
 if __name__ == "__main__":
 
@@ -121,9 +112,10 @@ if __name__ == "__main__":
 
     print('\nTest 2: Comparaciones')
     print('-'*40)
-    print(f"Duration(10, 20, 60) == Duration(10, 20, 10) => {t6.compare(t7)}")
-    print(f"Duration(10, 20, 10) == Duration(10, 20, 60) => {t7.compare(t6)}")
-    print(f"Duration(10, 20, 60) == Duration(10, 20, 60) => {t6.compare(t6)}")
+    print(f"Duration(10, 20, 60) == Duration(10, 20, 10) => {t6 == t7}")
+    # print(f"Duration(10, 20, 60) == Duration(10, 20, 10) => {t6.compare(t7)}")
+    # print(f"Duration(10, 20, 10) == Duration(10, 20, 60) => {t7.compare(t6)}")
+    # print(f"Duration(10, 20, 60) == Duration(10, 20, 60) => {t6.compare(t6)}")
     
     # Test 3. Addition and substraction seconds
     

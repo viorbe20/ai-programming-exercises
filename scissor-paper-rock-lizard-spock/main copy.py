@@ -31,6 +31,7 @@ def get_victories(xml_file):
     tree = ET.parse(xml_file) # parse method returns an object ElementTree that represents the xml tree
     root = tree.getroot() # reference to the superior element in order to work with all its elements
     victories_dict = {}
+    results_dict = {}
 
     for victory_elem in root.findall('victory'):
         # print(victory_elem.text)
@@ -38,13 +39,17 @@ def get_victories(xml_file):
         choice = GameAction[victory_elem.get('choice')] 
         against = GameAction[victory_elem.get('against')]
         victories_dict[choice] = against
+        
+        translation = victory_elem.text.strip()
+        results_dict[choice] = translation
 
-    return victories_dict
+    return victories_dict, results_dict
 
-Victories = get_victories("C:/Users/vober/Documents/curso-especializacion-bd-ia/PIA/pia-github/scissor-paper-rock-lizard-spock/resources/victories.xml")
+Victories, Results = get_victories("C:/Users/vober/Documents/curso-especializacion-bd-ia/PIA/pia-github/scissor-paper-rock-lizard-spock/resources/victories.xml")
 
 # The computer will attempt to predict the user's choice based on the last recent actions  
 NUMBER_RECENT_ACTIONS = 5
+
 
 def assess_game(user_action, computer_action):
     game_result = None
@@ -53,53 +58,12 @@ def assess_game(user_action, computer_action):
         print(f"Usuario y máquina han elegido {user_action.name}. ¡Empate!")
         game_result = GameResult.Tie
 
-    # You picked Rock
-    elif user_action == GameAction.Rock:
-        if computer_action == GameAction.Scissors:
-            print("Piedra machaca tijeras. ¡Has ganado!")
-            game_result = GameResult.Victory
-        else:
-            print("Papel cubre piedra. ¡Has perdido!")
-            game_result = GameResult.Defeat
+    elif user_action in Results:
+        translation = Results[user_action]
+        print(f"{translation}. ¡Has perdido!" if Victories[user_action] == computer_action else f"{translation}. ¡Has ganado!")
+        game_result = GameResult.Victory if Victories[user_action] == computer_action else GameResult.Defeat
 
-    # You picked Paper
-    elif user_action == GameAction.Paper:
-        if computer_action == GameAction.Rock:
-            print("Paper covers rock. You won!")
-            game_result = GameResult.Victory
-        else:
-            print("Scissors cuts paper. You lost!")
-            game_result = GameResult.Defeat
-
-    # You picked Scissors
-    elif user_action == GameAction.Scissors:
-        if computer_action == GameAction.Rock:
-            print("Piedra machaca tijeras. ¡Has perdido!")
-            game_result = GameResult.Defeat
-        else:
-            print("Tijeras corta papel. ¡Has ganado!")
-            game_result = GameResult.Victory
-
-    # Add you picked Lizard
-    elif user_action == GameAction.Lizard:
-        if computer_action == GameAction.Spock:
-            print("Lagarto envenena a Spock. ¡Has ganado!")
-            game_result = GameResult.Victory
-        else:
-            print("Spock aplasta Lagarto. ¡Has perdido!")
-            game_result = GameResult.Defeat
-    
-    # Add you picked Spock 
-    elif user_action == GameAction.Spock:
-        if computer_action == GameAction.Lizard:
-            print("Lagarto envenena a Spock. ¡Has perdido!")
-            game_result = GameResult.Defeat
-        else:
-            print("Spock vaporiza lagarto. ¡Has ganado!")
-            game_result = GameResult.Victory
-            
     return game_result
-
 def get_computer_action(user_actions_history, game_history):
     # No previous user actions => random computer choice
     if not user_actions_history or not game_history:

@@ -1,29 +1,11 @@
-"""
-Ejercicio 2
-
-Crea una clase, y pruébala, que modele fracciones. Debe permitir:
-
-- Crear fracciones indicando numerador y denominador.
-    Ejemplo: f = Fraction(2, 3)
-    Ojo!!! No se puede tener un denominador cero.
-- Las fracciones pueden operar entre sí.
-- Sumar, multiplicar, dividir, restar.
-    Ojo!!! esto se puede hacer: f + 1, 5 * f
-- Las fracciones se pueden comparar. ==, <, <=, >, >=, !=
-    Ojo!!! estas dos fracciones son iguales: 1/2 y 2/4
-    Ojo!!! esto se puede hacer 1 < 1/2
-
-Author: Virginia Ordoño Bernier
-Date: november 2023
-"""
 from typeguard import typechecked
-import math
 
 @typechecked
 class Fraction:
 
-    def __init__(self, num: int, den: int):   
-        self.__num = num
+    def __init__(self, num: int, den: int = 1):
+        self._is_zero_den(den)
+        self.num = num
         self.den = den
     
     @property
@@ -32,20 +14,16 @@ class Fraction:
     
     @property
     def den(self):
-        return self.__den
+        return abs(self.__den)
     
     @num.setter
     def num(self, new_value: int):
-        gcd = math.gcd(num, self.den)
-        self.__num = new_value // gcd
-        self.__den = self.den // gcd
+        self.__num = new_value
             
     @den.setter
     def den(self, new_value: int):
         self._is_zero_den(new_value)
-        gcd = math.gcd(num, self.den)
-        self.__num = new_value // gcd
-        self.__den = self.den // gcd
+        self.__den = abs(new_value)
     
     @staticmethod
     def _is_zero_den(den):
@@ -79,7 +57,6 @@ class Fraction:
 
     @staticmethod
     def get_lcm(den1, den2):
-        #print(abs(den1 * den2) // Fraction.get_gcd(den1, den2))
         return abs(den1 * den2) // Fraction.get_gcd(den1, den2)
 
     # Comparison operations        
@@ -91,6 +68,7 @@ class Fraction:
         elif not isinstance(other, Fraction):
             raise TypeError('Operador invalido para "<".')
         return (self.__num / self.__den) < (other.num / other.den)
+    
 
     def __gt__(self, other) -> bool:
     # Only int or Fraction
@@ -131,7 +109,7 @@ class Fraction:
         return Fraction(result_num, lcm)
     
     def __radd__(self, other:int): 
-        return self + Fraction(other, 1)
+        return self + other
     
     def __sub__(self, other):
         # Other == int or fractions
@@ -156,18 +134,13 @@ class Fraction:
     def __rsub__(self, other:int):
         return Fraction(other, 1) - other
 
-    def __mul__(self, other: (int, 'Fraction')):
+    def __mul__(self, other):
+        # Other == int or fractions
         if isinstance(other, int):
-            return Fraction(self.num * other.num, self.den)
+            other = Fraction(other, 1)
+        elif not isinstance(other, Fraction):
+            raise TypeError("Sólo se pueden multiplicar fracciones o enteros.")
         return Fraction(self.num * other.num, self.den * other.den)
-    
-        # def __mul__(self, other):
-        # # Other == int or fractions
-        # if isinstance(other, int):
-        #     other = Fraction(other, 1)
-        # elif not isinstance(other, Fraction):
-        #     raise TypeError("Sólo se pueden multiplicar fracciones o enteros.")
-        # return Fraction(self.num * other.num, self.den * other.den)
     
     def __rmul__(self, other:int): 
         return Fraction(other, 1) * self
@@ -188,22 +161,8 @@ class Fraction:
     def __rtruediv__(self, other:int):
         return Fraction(other, 1) / self
 
-if __name__ == "__main__":
 
-    # Test 1: create fractions    
-    print('\nTest 1: Crear fracciones' )
-    print('-'*40)
-    print(f'Fraction(6, 3) => {Fraction(6, 3)}')
-    
-    # Test 2: 0 denominator
-    print('\nTest 2: Denominador 0' )
-    print('-'*40)
-    
-    try:
-        Fraction(5, 0)
-    except ValueError as e:
-        print(f'Fraction(5, 0) => Error: {e}')
-
+if __name__ == '__main__':
     # Test 3: fractions operations
     f1 = Fraction(3, 8)
     f2 = Fraction(4, 4)
@@ -211,41 +170,19 @@ if __name__ == "__main__":
 
     print('\nTest 3: Operaciones con fracciones' )
     print('-'*40)
-    print('\nSuma' )
-    print('-'*40)
     print(f'{f1} + {f2} = {f1 + f2}')
     print(f'{f2} + {f1} = {f2 + f1}')
     print(f'{f1} + {num} = {f1 + num}')
     print(f'{num} + {f1} = {num + f1}')
-    print('\nResta' )
-    print('-'*40)
     print(f'{f1} - {f2} = {f1 - f2}')
     print(f'{f2} - {f1} = {f2 - f1}')
     print(f'{f1} - {num} = {f1 - num}')
     print(f'{num} - {f1} = {num - f1}')
-    print('\nMultiplicación' )
-    print('-'*40)
-    print(f'{f1} * {f2} = {f1 * f2}')
-    print(f'{f2} * {f1} = {f2 * f1}')
-    print(f'{f1} * {num} = {f1 * num}')
-    print(f'{num} * {f1} = {num * f1}')
-    print('\nDivisión' )
-    print('-'*40)
-    print(f'{f1} / {f2} = {f1 / f2}')
-    print(f'{f2} / {f1} = {f2 / f1}')
-    print(f'{f1} / {num} = {f1 / num}')
-    print(f'{num} / {f1} = {num / f1}')
-
-    
-    # Ejemplos de comparación
-    f3 = Fraction(10, 2)
-    num1 = 5
-
-    print('\nTest 4: Comparaciones con fracciones')
-    print('-'*40)
-    print(f'{f3} < {f3} => {f3 < f3}')
-    print(f'{f3} > {f3} => {f3 > f3}')
-    print(f'{f3} == {f3} => {f3 == f3}')
-    print(f'{f3} < {num1} => {f3 < num1}')
-    print(f'{f3} > {num1} => {f3 > num1}')
-    print(f'{f3} == {num1} => {f3 == num1}')
+print(f'{f1} * {f2} = {f1 * f2}')
+print(f'{f2} * {f1} = {f2 * f1}')
+print(f'{f1} * {num} = {f1 * num}')
+print(f'{num} * {f1} = {num * f1}')
+print(f'{f1} / {f2} = {f1 / f2}')
+print(f'{f2} / {f1} = {f2 / f1}')
+print(f'{f1} / {num} = {f1 / num}')
+print(f'{num} / {f1} = {num / f1}')
