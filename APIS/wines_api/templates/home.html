@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Página de inicio -{% endblock %}
+
+{% block header %}
+    <h1>API PREDICCIÓN CALIDAD DE VINO</h1>
+{% endblock %}
+
+{% block content %}
+<section id='home-content'>
+<img src="{{ url_for('static', filename='img/wine_lab.png') }}" alt="wine_lab">
+    <form method="post" action="/">
+        <div>
+        <div class='wine_input'>
+            <label for="alcohol">Alcohol:</label>
+            <input type="float" name="alcohol" required>
+        </div>
+        <div class='wine_input'>
+            <label for="sulphates">Sulfatos:</label>
+            <input type="float" name="sulfatos" required>
+        </div>
+        <div>
+        <input  id='submit_button' type="submit" value="Enviar">
+    </form>
+</section>
+{% endblock %}
+

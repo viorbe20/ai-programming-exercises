@@ -1,0 +1,60 @@
+@charset "UTF-8";
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 0;
+  margin: 0;
+}
+body header {
+  background-color: #CDA053;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+body #home-content {
+  margin: 8% 2%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+body #home-content img {
+  display: inline-block;
+  /* Para que el contenedor se ajuste al tamaño de la imagen */
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  /* Ajusta el valor según sea necesario */
+  overflow: hidden;
+  /* Para ocultar las esquinas de la imagen que sobresalen */
+  width: 25%;
+}
+body #home-content form {
+  margin: 0 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #AAAAAA;
+  display: flex;
+  flex-direction: column;
+}
+body #home-content form .wine_input {
+  display: flex;
+}
+body #home-content form .wine_input label {
+  width: 40%;
+}
+body #home-content form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+body #home-content form input[type=submit] {
+  background-color: #993133;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 50%;
+}/*# sourceMappingURL=style.css.map */
