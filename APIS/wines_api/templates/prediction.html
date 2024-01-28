@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Predicción{% endblock %}
+
+{% block header %}
+    <h1>API PREDICCIÓN CALIDAD DE VINO</h1>
+{% endblock %}
+
+{% block content %}
+<section id='prediction-content'>
+<p>La calidad del vino es: {{ quality }}</p>
+<img src="{{ url_for('static', filename='img/wine_lab.png') }}" alt="wine_lab">
+<a href="{{ url_for('home') }}">
+    <input  type="submit" value="Volver">
+</a>
+</section>
+{% endblock %}
+

@@ -10,6 +10,7 @@ model_path = os.path.join(script_dir, 'model', 'wine_model.pkl')
 model = pickle.load(open(model_path, 'rb'))
 
 @app.route('/', methods=['GET', 'POST'])
+
 def home():
     if request.method == 'POST':
         # get parameters from form
@@ -24,7 +25,7 @@ def home():
 
                 # model prediction
                 quality = int(model.predict([[alcohol, sulphates]])[0])
-                return render_template('resultado.html', alcohol=alcohol, sulphates=sulphates, quality=quality)
+                return render_template('prediction.html', alcohol=alcohol, sulphates=sulphates, quality=quality)
 
             except ValueError:
                 # Exception if parameters != digits

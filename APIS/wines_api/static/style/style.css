@@ -14,7 +14,7 @@ body header {
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
 }
 body #home-content {
-  margin: 8% 2%;
+  margin: 4% 2%;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -40,6 +40,7 @@ body #home-content form {
 }
 body #home-content form .wine_input {
   display: flex;
+  align-items: center;
 }
 body #home-content form .wine_input label {
   width: 40%;
@@ -47,12 +48,46 @@ body #home-content form .wine_input label {
 body #home-content form input {
   width: 100%;
   padding: 8px;
-  margin-bottom: 16px;
+  margin: 16px 0px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
 body #home-content form input[type=submit] {
+  background-color: #993133;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 50%;
+}
+body #prediction-content {
+  margin: 2% 2%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+body #prediction-content p {
+  font-size: 24px;
+}
+body #prediction-content img {
+  display: inline-block;
+  /* Para que el contenedor se ajuste al tamaño de la imagen */
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  /* Ajusta el valor según sea necesario */
+  overflow: hidden;
+  /* Para ocultar las esquinas de la imagen que sobresalen */
+  width: 25%;
+}
+body #prediction-content input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+body #prediction-content input[type=submit] {
   background-color: #993133;
   color: #fff;
   cursor: pointer;
