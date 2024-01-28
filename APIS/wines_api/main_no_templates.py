@@ -21,7 +21,7 @@ model = pickle.load(open(model_path, 'rb'))
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('home.html')
+    return "API PREDICIÓN VINO"
 
 @app.route('/winequality', methods=['GET'])
 def wine_quality():
