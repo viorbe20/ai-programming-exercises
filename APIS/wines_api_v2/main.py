@@ -1,42 +1,56 @@
-from flask import Flask, request, jsonify, make_response
-import pickle
 import os
-
+import pickle
+from flask import Flask, request, jsonify, make_response
 import numpy as np
 
 app = Flask(__name__)
 
-# Obtener la ruta desde el directorio actual
+# Get path
 script_dir = os.path.dirname(__file__)
 model_path = os.path.join(script_dir, 'models', 'wine_model_complete.pkl')
 model = pickle.load(open(model_path, 'rb'))
 
+def validate_float(value):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return None
 
 @app.route('/', methods=['GET'])
 def predict_wine_quality():
-    # Extraer los parámetros del request
-    fixed_acidity = request.args.get("fixedacidity", type=float)
-    volatile_acidity = request.args.get("volatileacidity", type=float)
-    citric_acid = request.args.get("citricacid", type=float)
-    residual_sugar = request.args.get("residualsugar", type=float)
-    chlorides = request.args.get("chlorides", type=float)
-    free_sulfur_dioxide = request.args.get("freesulfurdioxide", type=float)
-    total_sulfur_dioxide = request.args.get("totalsulfurdioxide", type=float)
-    density = request.args.get("density", type=float)
-    ph = request.args.get("ph", type=float)
-    sulphates = request.args.get("sulphates", type=float)
-    alcohol = request.args.get("alcohol", type=float)
+    # Define parameters
+    input_params = {
+        'fixedacidity': None,
+        'volatileacidity': None,
+        'citricacid': None,
+        'residualsugar': None,
+        'chlorides': None,
+        'freesulfurdioxide': None,
+        'totalsulfurdioxide': None,
+        'density': None,
+        'ph': None,
+        'sulphates': None,
+        'alcohol': None,
+    }
 
-    # Crear un array unidimensional con los valores de las variables
-    features = np.array([fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide, density, ph, sulphates, alcohol])
+    # Iterates through key-value from input_params dictionary. 
+    # Each iteration: if there is not value or cannot be float, the key keeps the default value (None)
+    for param, default_value in input_params.items():
+        input_params[param] = request.args.get(param, type=validate_float, default=default_value)
 
-    # Convertir el array en una matriz de una fila y 11 columnas
+    # If case a value is None
+    if None in input_params.values():
+        return make_response(jsonify({'message': 'Parámetros de entrada inválidos'}), 400)
+
+    # Creates a one dimension array, that is, what the model is expecting
+    features = np.array(list(input_params.values()))
+
+    # Reshape the array into a matrix with one row and n columns, where n is the number of features
     features = features.reshape(1, -1)
 
-    # Hacer la predicción con el modelo
-    quality = int(model.predict(features))
+    # Prediction
+    quality = int(model.predict(features)[0])
 
-    # Devolver la predicción como respuesta
     return jsonify({'quality': quality})
 
 
