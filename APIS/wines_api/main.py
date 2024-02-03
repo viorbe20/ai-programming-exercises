@@ -41,6 +41,7 @@ def wine_quality():
     # get parameters
     alcohol = request.args.get('alcohol')
     sulphates = request.args.get('sulphates')
+    
 
     # validate parameters
     if alcohol and sulphates:
