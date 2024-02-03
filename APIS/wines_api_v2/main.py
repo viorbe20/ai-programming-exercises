@@ -46,6 +46,7 @@ def predict_wine_quality():
     features = np.array(list(input_params.values()))
 
     # Reshape the array into a matrix with one row and n columns, where n is the number of features
+    # From 1 dimension to 2 dimensions
     features = features.reshape(1, -1)
 
     # Prediction
