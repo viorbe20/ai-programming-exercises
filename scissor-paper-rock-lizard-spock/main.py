@@ -41,6 +41,7 @@ def get_victories(xml_file):
 
     return victories_dict
 
+# variable de entorno
 Victories = get_victories("C:/Users/vober/Documents/curso-especializacion-bd-ia/PIA/pia-github/scissor-paper-rock-lizard-spock/resources/victories.xml")
 
 # The computer will attempt to predict the user's choice based on the last recent actions  
