@@ -53,7 +53,9 @@ def predict():
     predicted_class = np.argmax(prediction)
 
     # Devolver la predicción como un string
-    prediction_str = str(predicted_class)
+    numbers_dict = {0:'cero', 1:'uno', 2:'dos', 3:'tres', 4:'cuatro', 5:'cinco', 6:'seis', 7:'siete', 8:'ocho', 9:'nueve'}
+    
+    prediction_str = numbers_dict[predicted_class]
 
     return render_template('prediction.html', prediction=prediction_str)
 

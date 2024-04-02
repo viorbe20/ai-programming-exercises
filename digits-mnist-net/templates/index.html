@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargar Imagen y Mostrar Predicción</title>
-</head>
+{% extends 'base.html' %}
+
+{% block title %}Página de inicio{% endblock %}
+
+
+{% block content %}
+
 <body>
-    <h1>Cargar Imagen y Mostrar Predicción</h1>
+    <div id='form-section' class="col-md-6">
     <form action="/predict" method="post" enctype="multipart/form-data">
         <input type="file" name="file" accept="image/*" required>
-        <button type="submit">Enviar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
-
-
+    </div>
 </body>
+
 </html>
+
+{% endblock %}
