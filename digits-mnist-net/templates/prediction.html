@@ -8,11 +8,15 @@
 <body>
 
     <div id='prediction-section' class="col-md-6">
-    <h2>Predicción:</h2>
-    <p>El número predicho es: {{ prediction }}</p>
+    <h2>El número predicho es: {{ prediction }}</h2>
+
+    <!-- Mostrar la imagen -->
+    <div id='img-container'>
+    <img src="{{ url_for('static', filename='img/number-pic.png') }}" alt="Imagen predicha">
+    </div>
 
     <!-- Enlace para volver a la página de inicio -->
-    <a href="/" class="btn btn-success">Volver a la página de inicio</a>
+    <a href="/" class="btn btn-secondary">Volver a la página de inicio</a>
     </div>
 </body>
 </html>
