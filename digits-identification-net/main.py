@@ -47,19 +47,19 @@ def predict():
     # np.fromstring convierte el contenido del archivo en un string
     # np.uint8 es el tipo de dato de los elementos del array
     # cv2.IMREAD_COLOR indica que la imagen se cargará en color 
-    img = cv2.imread(filepath, cv2.IMREAD_COLOR)
     #img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
+    img = cv2.imread(filepath, cv2.IMREAD_COLOR)
 
-    # Escalar la imagen a 20x20 píxeles
+    # Escalar la imagen a 28x28 píxeles
     img_resized = cv2.resize(img, (28, 28))
 
     # # Convertir la imagen a escala de grises
     img_gray = cv2.cvtColor(img_resized, cv2.COLOR_BGR2GRAY)
 
-    # # Normalizar los valores de píxeles
+    # Normalizar los valores de píxeles
     img_normalized = img_gray / 255.0
 
-    # # Ajustar la forma de la imagen para que coincida con la entrada del modelo
+    # Ajustar la forma de la imagen para que coincida con la entrada del modelo
     img_reshaped = img_normalized.reshape(1, 28, 28)
 
     # Realizar la predicción con el modelo
