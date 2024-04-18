@@ -1,7 +1,4 @@
-from tkinter import Image
-import uuid
 import numpy as np
-from keras.layers import Dense
 from flask import Flask, render_template, request, jsonify, make_response
 import pickle
 import os
@@ -39,7 +36,7 @@ def predict():
 
     # Guardar la imagen en la carpeta UPLOAD_FOLDER
     filename = 'number-pic.' + file.filename.rsplit('.', 1)[1]  # Conserva la extensión del archivo original
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename) 
     file.save(filepath)
 
     # Cargar la imagen con OpenCV
@@ -53,7 +50,7 @@ def predict():
     # Escalar la imagen a 28x28 píxeles
     img_resized = cv2.resize(img, (28, 28))
 
-    # # Convertir la imagen a escala de grises
+    # Convertir la imagen a escala de grises
     img_gray = cv2.cvtColor(img_resized, cv2.COLOR_BGR2GRAY)
 
     # Normalizar los valores de píxeles
